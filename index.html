@@ -334,39 +334,53 @@ DISCORD BEITRETEN
 <script>
 
 /* Roblox Team */
-
-const teamMembers=[
-
-{roblox:2325449083,role:"Creator",col:"#ff4757"},
-{roblox:1728329662,role:"Co Creator",col:"#ff4757"},
-{roblox:6216761571,role:"Head of Development",col:"#3498db"},
-{roblox:9863289142,role:"Developer",col:"#9b59b6"}
-
+const teamMembers = [
+    {roblox: 2325449083, role: "Creator", col: "#ff4757"},
+    {roblox: 1728329662, role: "Co Creator", col: "#ff4757"},
+    {roblox: 6216761571, role: "Head of Development", col: "#3498db"},
+    {roblox: 9863289142, role: "Developer", col: "#9b59b6"}
 ];
 
-const display=document.getElementById("team-display");
+const display = document.getElementById("team-display");
 
-teamMembers.forEach(m=>{
+async function loadTeam() {
+    // 1. Alle IDs sammeln, um nur EINE Anfrage an die API zu senden (schneller!)
+    const userIds = teamMembers.map(m => m.roblox).join(',');
+    const apiUrl = `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userIds}&size=420x420&format=Png&isCircular=false`;
 
-const avatar=`https://www.roblox.com/headshot-thumbnail/image?userId=${m.roblox}&width=420&height=420&format=png`;
+    try {
+        const response = await fetch(apiUrl);
+        const result = await response.json();
+        
+        // 2. Map erstellen, um Bilder den IDs zuzuordnen
+        const avatarMap = {};
+        result.data.forEach(item => {
+            avatarMap[item.targetId] = item.imageUrl;
+        });
 
-display.innerHTML+=`
+        // 3. Team-Mitglieder anzeigen
+        teamMembers.forEach(m => {
+            const avatarUrl = avatarMap[m.roblox] || ""; // Fallback falls Bild fehlt
 
-<div class="team-member">
+            display.innerHTML += `
+                <div class="team-member">
+                    <img src="${avatarUrl}" 
+                         alt="${m.role}"
+                         style="width:80px; height:80px; border-radius:50%; border:3px solid ${m.col}; object-fit: cover;">
+                    <span class="role-tag" style="color:${m.col}">
+                        ${m.role}
+                    </span>
+                </div>
+            `;
+        });
+    } catch (error) {
+        console.error("Fehler beim Laden der Avatare:", error);
+        display.innerHTML = "<p>Team-Daten konnten nicht geladen werden.</p>";
+    }
+}
 
-<img src="${avatar}" 
-style="width:80px;border-radius:50%;border:3px solid ${m.col}">
-
-<span class="role-tag" style="color:${m.col}">
-${m.role}
-</span>
-
-</div>
-
-`;
-
-});
-
+// Funktion ausführen
+loadTeam();
 /* Discord Counter */
 
 async function updateCounter(){
@@ -421,3 +435,4 @@ reveal();
 
 </body>
 </html>
+
