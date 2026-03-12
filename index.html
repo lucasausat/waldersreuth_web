@@ -32,18 +32,9 @@
             background-size: cover; background-position: center; z-index: -2; opacity: 0.35;
         }
 
-        /* --- SCANLINE ANIMATION --- */
-        body::before {
-            content: " "; position: fixed; top: 0; left: 0; width: 100%; height: 4px;
-            background: linear-gradient(to bottom, transparent, rgba(0, 255, 136, 0.1), transparent);
-            z-index: 1000; pointer-events: none;
-            animation: scanline 6s linear infinite;
-        }
-        @keyframes scanline { 0% { top: -10%; } 100% { top: 110%; } }
-
         /* --- CUSTOM CURSOR --- */
-        #cursor { width: 5px; height: 5px; background: var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; box-shadow: 0 0 10px var(--primary); }
-        #cursor-follower { width: 35px; height: 35px; border: 0.5px solid var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.15s ease-out; opacity: 0.4; }
+        #cursor { width: 5px; height: 5px; background: var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 12000; box-shadow: 0 0 10px var(--primary); }
+        #cursor-follower { width: 35px; height: 35px; border: 0.5px solid var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 11999; transition: transform 0.15s ease-out; opacity: 0.4; }
 
         /* --- NAVIGATION --- */
         nav {
@@ -111,22 +102,53 @@
         /* --- TEAM SECTION --- */
         .team-container { max-width: 900px; margin: 120px auto; padding: 0 40px; }
         .team-card { 
-            display: flex; align-items: center; padding: 22px 0; 
+            display: flex; align-items: center; padding: 22px 20px; 
             border-bottom: 0.5px solid var(--glass-border); 
-            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0; transform: translateX(-20px);
+            transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .team-card:hover { padding-left: 20px; background: rgba(255,255,255,0.02); border-color: var(--primary); }
-        .team-rank { font-family: var(--font-tech); font-size: 0.5rem; color: var(--primary); margin-left: auto; letter-spacing: 2px; text-align: right; }
-        .status-light { width: 5px; height: 5px; background: var(--primary); border-radius: 50%; margin-right: 20px; box-shadow: 0 0 10px var(--primary); animation: pulse 2s infinite; }
+        .reveal.active .team-card { opacity: 1; transform: translateX(0); }
+        .team-card:hover { background: rgba(255, 255, 255, 0.03); border-color: var(--primary); padding-left: 35px; }
+        .team-rank { font-family: var(--font-tech); font-size: 0.5rem; margin-left: auto; letter-spacing: 2px; text-align: right; }
+        .status-light { width: 6px; height: 6px; border-radius: 50%; margin-right: 20px; box-shadow: 0 0 12px currentColor; animation: pulse 2s infinite; }
+        
         @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
 
+        /* --- MODERN DENIED OVERLAY --- */
         #denied-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 71, 87, 0.08); border: 1px solid var(--danger);
-            display: none; z-index: 11000; animation: flash 0.3s infinite;
-            justify-content: center; align-items: center; backdrop-filter: blur(8px);
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.95) 100%);
+            display: none; z-index: 11000; 
+            justify-content: center; align-items: center; 
+            backdrop-filter: blur(12px) saturate(0.5);
+            transition: 0.3s opacity;
         }
-        @keyframes flash { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.4; } }
+        .denied-content {
+            text-align: center; border: 1px solid var(--danger);
+            padding: 60px; background: rgba(255, 0, 0, 0.03);
+            box-shadow: 0 0 50px rgba(255, 71, 87, 0.2);
+            position: relative; overflow: hidden;
+        }
+        .denied-content::before {
+            content: ""; position: absolute; top: 0; left: -100%; width: 200%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            animation: scan-effect 2s infinite;
+        }
+        @keyframes scan-effect { 0% { left: -100%; } 100% { left: 100%; } }
+
+        .glitch-text {
+            font-family: var(--font-tech); font-size: 2.8rem; color: var(--danger);
+            letter-spacing: 8px; text-shadow: 2px 2px #000;
+            animation: glitch 0.2s infinite;
+        }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
 
         footer { padding: 80px; text-align: center; opacity: 0.3; font-size: 0.55rem; font-family: var(--font-tech); letter-spacing: 4px; }
         .reveal { opacity: 0; transform: translateY(40px); transition: 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
@@ -140,9 +162,11 @@
 <div id="cursor-follower"></div>
 
 <div id="denied-overlay" onclick="this.style.display='none'">
-    <div style="text-align: center;">
-        <h1 style="font-family: var(--font-tech); font-size: 2.5rem; color: var(--danger); letter-spacing: 5px;">ZUGRIFF VERWEIGERT</h1>
-        <p style="letter-spacing: 3px; font-size: 0.7rem; margin-top: 10px;">KRITISCHER FEHLER // FEHLENDE BERECHTIGUNG</p>
+    <div class="denied-content">
+        <div style="font-family: var(--font-tech); font-size: 0.6rem; color: var(--danger); margin-bottom: 10px; opacity: 0.6;">SYSTEM SECURITY BREACH DETECTED</div>
+        <h1 class="glitch-text">ACCESS DENIED</h1>
+        <div style="width: 100%; height: 1px; background: var(--danger); margin: 20px 0; opacity: 0.3;"></div>
+        <p style="letter-spacing: 5px; font-size: 0.65rem; color: #fff; opacity: 0.8;">AUTH_ERROR: INSUFFICIENT_LEVEL_CLEARANCE</p>
     </div>
 </div>
 
@@ -215,7 +239,8 @@
     function showDenied() {
         const overlay = document.getElementById('denied-overlay');
         overlay.style.display = 'flex';
-        setTimeout(() => { overlay.style.display = 'none'; }, 2000);
+        // Automatisches Schließen nach 3 Sekunden
+        setTimeout(() => { overlay.style.display = 'none'; }, 3000);
     }
 
     const observer = new IntersectionObserver(entries => {
@@ -247,21 +272,23 @@
 
     // --- TEAM MANAGEMENT ---
     const team = [
-        { name: "lucas.aus.at", role: "TOP-MANAGEMENT" },
-        { name: "joge2286", role: "TOP-MANAGEMENT" },
-        { name: "benschi1503", role: "LEAD DEVELOPMENT" },
-        { name: "mrlenny13", role: "GAME DEV" }
+        { name: "lucas.aus.at", role: "TOP-MANAGEMENT", color: "#00ff88" },
+        { name: "joge2286", role: "TOP-MANAGEMENT", color: "#00ff88" },
+        { name: "benschi1503", role: "LEAD DEVELOPMENT", color: "#00d1ff" },
+        { name: "mrlenny13", role: "GAME DEV", color: "#ffd100" }
     ];
 
     const teamList = document.getElementById('team-list');
-    team.forEach(m => {
-        teamList.innerHTML += `
-            <div class="team-card">
-                <div class="status-light"></div>
-                <div style="font-size: 0.85rem; font-weight: 300; letter-spacing: 1px;">${m.name}</div>
-                <div class="team-rank">${m.role}</div>
-            </div>
+    team.forEach((m, index) => {
+        const card = document.createElement('div');
+        card.className = 'team-card';
+        card.style.transitionDelay = (index * 0.15) + "s"; 
+        card.innerHTML = `
+            <div class="status-light" style="color: ${m.color}; background: ${m.color};"></div>
+            <div style="font-size: 0.85rem; font-weight: 300; letter-spacing: 1px;">${m.name}</div>
+            <div class="team-rank" style="color: ${m.color};">${m.role}</div>
         `;
+        teamList.appendChild(card);
     });
 </script>
 
