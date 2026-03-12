@@ -1,276 +1,245 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waldersreuth RP | Roblox Hardcore</title>
+    <title>Waldersreuth RP | Offizielles Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-
     <style>
         :root {
             --primary: #2ecc71;
             --primary-glow: rgba(46, 204, 113, 0.4);
             --bg: #080a09;
-            --card-bg: rgba(20, 24, 22, 0.8);
+            --card-bg: rgba(20, 24, 22, 0.9);
+            --text: #e5e7eb;
         }
 
-        * { cursor: none; }
+        /* DARK MODE (Standard für RP ist meist Dark, aber hier als Switch) */
+        body.ghost-mode {
+            --bg: #030504;
+            --primary: #27ae60;
+            --primary-glow: rgba(39, 174, 96, 0.2);
+        }
+
+        * { cursor: none; margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.6; transition: background 0.5s; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: #e5e7eb;
-            margin: 0;
-            overflow-x: hidden;
-            line-height: 1.6;
+        /* --- LOADER MIT WALD-PARTIKELN --- */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
+        .tree-particle { position: absolute; color: var(--primary); opacity: 0.3; animation: fall linear forwards; pointer-events: none; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+        .loader-bar-container { width: 250px; height: 2px; background: #222; margin-top: 20px; overflow: hidden; }
+        .loader-bar { width: 0%; height: 100%; background: var(--primary); transition: width 0.3s ease; }
 
-        /* Cursor */
+        /* --- CUSTOM CURSOR --- */
         #cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            box-shadow: 0 0 15px var(--primary-glow);
-            transform: translate(-50%, -50%);
+            width: 20px; height: 20px; border: 2px solid var(--primary); border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9999;
+            box-shadow: 0 0 15px var(--primary-glow); transform: translate(-50%, -50%); transition: transform 0.1s ease;
         }
 
-        /* Hero */
+        /* --- HERO --- */
         header {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.6), var(--bg)),
-                url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2000");
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), var(--bg)), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2000');
+            background-size: cover; background-position: center; background-attachment: fixed;
         }
-
-        .status-badge {
-            background: rgba(243, 156, 18, 0.1);
-            border: 1px solid #f39c12;
-            color: #f39c12;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-        }
-
         h1 {
-            font-size: clamp(3rem, 12vw, 7rem);
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 15px;
-            background: linear-gradient(to bottom, #fff, #2ecc71);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: clamp(3rem, 12vw, 7.5rem); font-weight: 900; text-transform: uppercase; letter-spacing: 20px;
+            background: linear-gradient(to bottom, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 0 30px var(--primary-glow));
         }
 
-        .hero-text { margin-top: 20px; font-size: 1.2rem; color: #d1d5db; }
-        .live-counter { margin-top: 10px; font-size: 1rem; color: var(--primary); font-weight: bold; }
+        /* --- INTERAKTIVE KARTE (STILISIERT) --- */
+        .map-section { padding: 100px 20px; text-align: center; }
+        .map-placeholder {
+            max-width: 800px; margin: 40px auto; background: var(--card-bg); border: 1px solid var(--primary);
+            padding: 50px; border-radius: 20px; position: relative; overflow: hidden;
+        }
+        .map-point {
+            position: absolute; width: 15px; height: 15px; background: var(--primary); border-radius: 50%;
+            cursor: pointer; box-shadow: 0 0 10px var(--primary); transition: 0.3s;
+        }
+        .map-point:hover { transform: scale(1.5); background: #fff; }
 
-        /* Layout */
-        .container { max-width: 1200px; margin: auto; padding: 100px 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
-
+        /* --- GRID & CARDS --- */
+        .container { max-width: 1200px; margin: auto; padding: 60px 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .card {
-            background: var(--card-bg);
-            padding: 50px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            transition: 0.4s;
-            opacity: 0;
-            transform: translateY(50px);
+            background: var(--card-bg); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.4s; opacity: 0; transform: translateY(30px);
         }
-
         .card.visible { opacity: 1; transform: translateY(0); }
-        .card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 0 30px var(--primary-glow); }
+        .card:hover { border-color: var(--primary); box-shadow: 0 0 30px var(--primary-glow); transform: translateY(-5px); }
 
-        /* Coming Soon Box */
-        .coming-soon-box {
-            text-align: center;
-            padding: 60px 20px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 30px;
-            border: 2px dashed rgba(46, 204, 113, 0.2);
-            margin-top: 30px;
-        }
+        /* --- TEAM --- */
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 40px; }
+        .team-member { background: rgba(255,255,255,0.02); padding: 30px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+        .role-tag { font-size: 0.7rem; padding: 4px 10px; border-radius: 50px; text-transform: uppercase; font-weight: bold; }
 
-        /* Team Styles */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .team-member {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 40px 20px;
-            border-radius: 25px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .role-tag {
-            display: inline-block;
-            font-size: 0.75rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 10px;
-            padding: 4px 12px;
-            border-radius: 50px;
-        }
-
-        /* Individuelle Animationen */
-        .anim-float:hover { transform: translateY(-15px); border-color: #ff4757; box-shadow: 0 15px 30px rgba(255, 71, 87, 0.3); }
-        .anim-pulse:hover { transform: scale(1.05); border-color: #ff7f50; box-shadow: 0 0 25px rgba(255, 127, 80, 0.4); }
-        .anim-shake:hover { animation: shake 0.3s infinite; border-color: #3498db; box-shadow: 0 0 20px rgba(52, 152, 219, 0.3); }
-        .anim-glow:hover { border-color: #9b59b6; box-shadow: inset 0 0 15px rgba(155, 89, 182, 0.5), 0 0 15px rgba(155, 89, 182, 0.5); }
-
-        @keyframes shake {
-            0% { transform: rotate(1deg); }
-            50% { transform: rotate(-1deg); }
-            100% { transform: rotate(1deg); }
-        }
-
-        /* Button */
+        /* --- BUTTONS --- */
         .btn {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            color: #000;
-            padding: 20px 60px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 900;
-            font-size: 1.2rem;
-            display: inline-block;
-            margin-top: 40px;
-            box-shadow: 0 10px 30px var(--primary-glow);
-            transition: 0.3s;
+            background: var(--primary); color: #000; padding: 18px 45px; border-radius: 50px;
+            text-decoration: none; font-weight: 900; display: inline-block; transition: 0.3s;
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+        .btn:hover { transform: scale(1.05); background: #fff; }
+
+        /* DARK MODE SWITCH */
+        #ghost-switch {
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+            background: var(--card-bg); border: 1px solid var(--primary); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 5000;
         }
 
-        .btn:hover { transform: scale(1.05); }
-
-        footer { text-align: center; padding: 100px; color: #4b5563; }
+        footer { padding: 60px; text-align: center; color: #444; border-top: 1px solid #111; }
     </style>
 </head>
-
 <body>
 
-    <div id="cursor"></div>
+<div id="cursor"></div>
+<div id="ghost-switch" onclick="toggleGhostMode()">🌲</div>
 
-    <header>
-        <div class="status-badge">🏗️ DEVELOPMENT PHASE</div>
-        <h1>Waldersreuth</h1>
-        <div class="hero-text">Ein Dorf. Viele Geschichten. Deine Entscheidung.</div>
-        <div class="live-counter" id="liveCounter">Lade Live-Daten...</div>
-    </header>
+<div id="loader">
+    <h2 style="letter-spacing: 10px; color: #fff;">WALDERSREUTH</h2>
+    <div class="loader-bar-container"><div class="loader-bar" id="l-bar"></div></div>
+</div>
 
-    <div class="container">
-        <div class="grid">
-            <div class="card reveal">
-                <h3>🎭 Hardcore Roleplay</h3>
-                <p>Waldersreuth setzt auf realistisches Roleplay und echte Konsequenzen.</p>
-            </div>
-            <div class="card reveal">
-                <h3>⚙️ Eigene Systeme</h3>
-                <p>Individuell entwickelte Systeme sorgen für ein einzigartiges Spielerlebnis.</p>
-            </div>
-            <div class="card reveal">
-                <h3>🤝 Community Projekt</h3>
-                <p>Der Server wird gemeinsam mit der Community aufgebaut.</p>
-            </div>
+<header>
+    <div style="border: 1px solid var(--primary); color: var(--primary); padding: 5px 15px; border-radius: 50px; font-size: 0.8rem; margin-bottom: 20px;">ROBLOX HARDCORE RP</div>
+    <h1>Waldersreuth</h1>
+    <div id="liveCounter" style="color: var(--primary); font-weight: bold; margin-top: 20px;">VERBINDUNG WIRD HERGESTELLT...</div>
+    <a href="#about" class="btn" style="margin-top: 40px;">ERKUNDEN</a>
+</header>
+
+<div class="container" id="about">
+    <div class="grid">
+        <div class="card reveal">
+            <h3>🌲 Die Umgebung</h3>
+            <p>Dichte Wälder, versteckte Pfade und ein Dorf, das niemals schläft. Entdecke eine Karte voller Details.</p>
+        </div>
+        <div class="card reveal">
+            <h3>⚖️ Hardcore Regelwerk</h3>
+            <p>Deine Taten haben Konsequenzen. Ein realistisches Wirtschaftssystem und Fraktions-RP warten auf dich.</p>
+        </div>
+        <div class="card reveal">
+            <h3>🛠️ Custom Scripts</h3>
+            <p>Exklusive Roblox-Systeme, die du auf keinem anderen Server findest. Alles für dein Immersions-Erlebnis.</p>
         </div>
     </div>
+</div>
 
-    <div class="container reveal">
-        <h2 style="text-align:center;font-size:2.5rem;">Server Systeme</h2>
-        <div class="coming-soon-box">
-            <h3 style="color: var(--primary); letter-spacing: 8px; margin: 0; font-size: 2rem;">COMING SOON</h3>
-            <p style="color: #9ca3af; margin-top: 10px;">Unsere Entwickler arbeiten an bahnbrechenden Features.</p>
-        </div>
+<section class="map-section reveal">
+    <h2>Entdecke die Orte</h2>
+    <div class="map-placeholder">
+        <div class="map-point" style="top: 20%; left: 30%;" onclick="alert('Das Sägewerk: Arbeitsplatz für harte Kerle.')"></div>
+        <div class="map-point" style="top: 50%; left: 50%;" onclick="alert('Dorfzentrum: Hier trifft sich die Gemeinschaft.')"></div>
+        <div class="map-point" style="top: 70%; left: 80%;" onclick="alert('Der Außenposten: Nur für Mutige.')"></div>
+        <p style="margin-top: 200px; opacity: 0.5;">[ Interaktive Gebietskarte ]</p>
     </div>
+</section>
 
-    <div class="container reveal" style="text-align:center;">
-        <h2 style="font-size:2.5rem;">Das Team</h2>
-        <div class="team-grid" id="team-display"></div>
-    </div>
+<div class="container reveal" style="text-align: center;">
+    <h2>Das Projekt-Team</h2>
+    <div class="team-grid" id="team-list"></div>
+</div>
 
-    <div class="container reveal" style="text-align:center;">
-        <h2>Bist du bereit?</h2>
-        <p>Der Discord Server ist bereits eröffnet.</p>
-        <a href="https://discord.gg/QX5xj22dGW" class="btn">DISCORD BEITRETEN</a>
-    </div>
+<div class="container reveal" style="text-align: center; padding-bottom: 100px;">
+    <h2>Werde Teil der Geschichte</h2>
+    <a href="https://discord.gg/QX5xj22dGW" class="btn">DEM DISCORD BEITRETEN</a>
+</div>
 
-    <footer>© 2026 Waldersreuth Project</footer>
+<footer>
+    © 2026 Waldersreuth Project | Offizielle Website
+</footer>
 
-    <script>
-        /* Team Daten */
-        const teamMembers = [
-            { name: "lucas.aus.at", role: "Top Management", col: "#ff4757", anim: "float" },
-            { name: "joge2286", role: "Top Management", col: "#ff7f50", anim: "pulse" },
-            { name: "benschi1503", role: "Head of Development", col: "#3498db", anim: "shake" },
-            { name: "mrlenny13", role: "Developer", col: "#9b59b6", anim: "glow" }
-        ];
+<script>
+    // --- LOADER & PARTIKEL ---
+    function createTree() {
+        const loader = document.getElementById('loader');
+        if(!loader) return;
+        const p = document.createElement('div');
+        p.className = 'tree-particle';
+        p.innerHTML = '🌲';
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        loader.appendChild(p);
+        setTimeout(() => p.remove(), 5000);
+    }
+    const partInt = setInterval(createTree, 300);
 
-        const display = document.getElementById("team-display");
-
-        teamMembers.forEach(m => {
-            display.innerHTML += `
-                <div class="team-member anim-${m.anim}">
-                    <div style="font-size: 1.3rem; font-weight: 900; color: #fff; margin-bottom: 8px; letter-spacing: 1px;">
-                        ${m.name}
-                    </div>
-                    <span class="role-tag" style="color:${m.col}; border: 1px solid ${m.col}44; background: ${m.col}11;">
-                        ${m.role}
-                    </span>
-                </div>
-            `;
-        });
-
-        /* Discord Counter */
-        async function updateCounter() {
-            try {
-                const r = await fetch("https://discord.com/api/guilds/1477240537693028414/widget.json");
-                const d = await r.json();
-                document.getElementById("liveCounter").innerHTML = `🟢 ${d.presence_count} BÜRGER ONLINE`;
-            } catch (e) {
-                document.getElementById("liveCounter").innerHTML = `🟢 SERVER ONLINE`;
+    window.onload = () => {
+        let bar = document.getElementById('l-bar');
+        let w = 0;
+        let int = setInterval(() => {
+            w += Math.random() * 30;
+            if(w >= 100) {
+                w = 100; clearInterval(int); clearInterval(partInt);
+                setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 500);
             }
-        }
-        updateCounter();
+            bar.style.width = w + '%';
+        }, 200);
+    };
 
-        /* Cursor */
-        const cursor = document.getElementById("cursor");
-        document.addEventListener("mousemove", e => {
-            cursor.style.left = e.clientX + "px";
-            cursor.style.top = e.clientY + "px";
+    // --- CURSOR ---
+    const cursor = document.getElementById("cursor");
+    document.addEventListener("mousemove", e => {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
+    });
+
+    // --- GHOST MODE ---
+    function toggleGhostMode() {
+        document.body.classList.toggle('ghost-mode');
+        const btn = document.getElementById('ghost-switch');
+        btn.innerHTML = document.body.classList.contains('ghost-mode') ? '🌑' : '🌲';
+    }
+
+    // --- TEAM DATEN ---
+    const team = [
+        { name: "lucas.aus.at", role: "Management", col: "#ff4757" },
+        { name: "joge2286", role: "Management", col: "#ff7f50" },
+        { name: "benschi1503", role: "Lead Dev", col: "#3498db" },
+        { name: "mrlenny13", role: "Developer", col: "#9b59b6" }
+    ];
+
+    const teamList = document.getElementById('team-list');
+    team.forEach(m => {
+        teamList.innerHTML += `
+            <div class="team-member">
+                <div style="font-weight: 900;">${m.name}</div>
+                <span class="role-tag" style="border: 1px solid ${m.col}; color: ${m.col};">${m.role}</span>
+            </div>
+        `;
+    });
+
+    // --- REVEAL ANIMATION ---
+    function reveal() {
+        document.querySelectorAll(".reveal").forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+                el.classList.add("visible");
+            }
         });
+    }
+    window.addEventListener("scroll", reveal);
+    reveal();
 
-        /* Reveal Animation */
-        function reveal() {
-            document.querySelectorAll(".reveal").forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight - 100) {
-                    el.classList.add("visible");
-                }
-            });
+    // --- DISCORD COUNTER ---
+    async function updateCounter() {
+        try {
+            const r = await fetch("https://discord.com/api/guilds/1477240537693028414/widget.json");
+            const d = await r.json();
+            document.getElementById("liveCounter").innerHTML = `🟢 ${d.presence_count} BÜRGER IM WALD`;
+        } catch (e) {
+            document.getElementById("liveCounter").innerHTML = `🟢 SERVER STATUS: ONLINE`;
         }
-        window.addEventListener("scroll", reveal);
-        reveal();
-    </script>
+    }
+    updateCounter();
+</script>
+
 </body>
 </html>
