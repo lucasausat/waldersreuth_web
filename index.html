@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="de">
 <head>
 <meta charset="UTF-8">
@@ -82,13 +83,25 @@ font-size:1.1rem;
 opacity:0.9;
 }
 
-/* GRID */
+/* DEVELOPMENT BANNER */
+
+.dev-banner{
+background:#2f7df6;
+color:white;
+text-align:center;
+padding:14px;
+font-size:0.95rem;
+}
+
+/* CONTAINER */
 
 .container{
 max-width:1100px;
 margin:auto;
 padding:60px 20px;
 }
+
+/* GRID */
 
 .grid{
 display:grid;
@@ -126,6 +139,22 @@ border-left:4px solid var(--accent);
 margin-bottom:15px;
 }
 
+/* INFO SECTION */
+
+.info-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:30px;
+margin-top:50px;
+}
+
+.info-box{
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 10px 20px rgba(0,0,0,0.08);
+}
+
 /* FOOTER */
 
 footer{
@@ -138,6 +167,7 @@ font-size:0.85rem;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -147,10 +177,9 @@ font-size:0.85rem;
 
 <div class="nav-links">
 <a href="#">Startseite</a>
-<a href="#">Bürgerservice</a>
-<a href="#">Stadt & Leben</a>
-<a href="#">Tourismus</a>
-<a href="#">Kontakt</a>
+<a href="#service">Stadt</a>
+<a href="#news">Aktuelles</a>
+<a href="https://discord.gg/qg4gYuxUgx" target="_blank">Discord</a>
 </div>
 </nav>
 
@@ -159,44 +188,92 @@ font-size:0.85rem;
 <p>Offizielle Website der Stadt Königsbrunn</p>
 </header>
 
+<div class="dev-banner">
+🎮 Die Stadt Königsbrunn ist eine fiktive deutsche Stadt im Roblox Roleplay Spiel „Königsbrunn City Roleplay“.  
+Das Spiel befindet sich aktuell noch in Entwicklung.
+</div>
+
 <div class="container">
 
-<div class="grid">
+<h2 style="margin-bottom:30px;">Städtische Bereiche</h2>
+
+<div class="grid" id="service">
 
 <div class="card">
 <h3>🏛 Rathaus</h3>
-<p>Informationen zu Verwaltung, Bürgerbüro und Öffnungszeiten.</p>
+<p>Informationen zur Stadtverwaltung und zum Bürgermeister der Stadt Königsbrunn.</p>
 </div>
 
 <div class="card">
 <h3>📄 Bürgerservice</h3>
-<p>Anträge, Formulare und Online-Services der Stadt.</p>
+<p>Informationen für Bürgerinnen und Bürger der Stadt sowie geplante Verwaltungsangebote.</p>
 </div>
 
 <div class="card">
 <h3>🌳 Stadt & Leben</h3>
-<p>Informationen zu Kultur, Vereinen und Veranstaltungen.</p>
+<p>Informationen über Kultur, Vereine, Bildung und das Leben in der Stadt.</p>
 </div>
 
 <div class="card">
-<h3>🚍 Verkehr</h3>
-<p>Öffentlicher Nahverkehr und Mobilitätsangebote.</p>
+<h3>🗺 Stadtkarte</h3>
+<p>Eine interaktive Karte der Stadt Königsbrunn befindet sich aktuell in Entwicklung und wird bald veröffentlicht.</p>
+</div>
+
+<div class="card">
+<h3>🎮 Roblox Projekt</h3>
+<p>Königsbrunn City Roleplay ist ein Roblox-Spiel, das eine realistische deutsche Stadt simuliert.</p>
+</div>
+
+<div class="card">
+<h3>💬 Community</h3>
+<p>Die Community organisiert sich über unseren Discord Server. Dort findest du Updates und kannst Support erhalten.</p>
+<a href="https://discord.gg/qg4gYuxUgx" target="_blank">Discord beitreten</a>
 </div>
 
 </div>
 
-<div class="news">
+<div class="news" id="news">
 
-<h2 style="margin-bottom:20px;">Aktuelle Meldungen</h2>
+<h2 style="margin-bottom:20px;">Projekt-Neuigkeiten</h2>
 
 <div class="news-item">
-<strong>Neuer Stadtpark eröffnet</strong><br>
-Der neue Stadtpark im Zentrum wurde offiziell eröffnet.
+<strong>Projekt gestartet</strong><br>
+Die Entwicklung des Roblox Spiels „Königsbrunn City Roleplay“ hat offiziell begonnen.
 </div>
 
 <div class="news-item">
-<strong>Sommerfest 2026</strong><br>
-Das große Stadtfest findet dieses Jahr am 14. Juli statt.
+<strong>Discord Community eröffnet</strong><br>
+Unser offizieller Discord Server ist jetzt online. Dort erhältst du alle Updates zum Projekt.
+</div>
+
+<div class="news-item">
+<strong>Stadtkarte in Entwicklung</strong><br>
+Aktuell wird an einer interaktiven Stadtkarte gearbeitet, die bald auf dieser Website verfügbar sein wird.
+</div>
+
+</div>
+
+<div class="info-grid" id="kontakt">
+
+<div class="info-box">
+<h3>🏛 Bürgermeister</h3>
+<p>
+Bürgermeister: Max Mustermann<br>
+Stadtverwaltung Königsbrunn<br>
+Diese Stadt ist Teil eines fiktiven Roblox Roleplay Projekts.
+</p>
+</div>
+
+<div class="info-box">
+<h3>💬 Support & Kontakt</h3>
+<p>
+Support erfolgt ausschließlich über unseren Discord Server.<br>
+Dort kannst du ein Ticket eröffnen und das Team kontaktieren.
+</p>
+
+<a href="https://discord.gg/qg4gYuxUgx" target="_blank">
+Discord Server öffnen
+</a>
 </div>
 
 </div>
@@ -204,7 +281,7 @@ Das große Stadtfest findet dieses Jahr am 14. Juli statt.
 </div>
 
 <footer>
-© 2026 Stadt Königsbrunn | Dies ist eine fiktive Website für ein Roleplay-Projekt.
+© 2026 Stadt Königsbrunn | Fiktive Website für ein Roblox Roleplay Projekt
 </footer>
 
 </body>
