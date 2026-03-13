@@ -27,21 +27,38 @@ color:var(--text-main);
 overflow-x:hidden;
 }
 
+/* CYBER GRID BACKGROUND */
+
 body::before{
 content:"";
 position:fixed;
 inset:0;
 background-image:
-linear-gradient(rgba(0,255,255,0.05) 1px,transparent 1px),
-linear-gradient(90deg,rgba(0,255,255,0.05) 1px,transparent 1px);
-background-size:40px 40px;
-animation:gridMove 15s linear infinite;
-z-index:-1;
+linear-gradient(rgba(0,229,255,0.06) 1px,transparent 1px),
+linear-gradient(90deg,rgba(0,229,255,0.06) 1px,transparent 1px);
+background-size:50px 50px;
+animation:gridMove 12s linear infinite;
+z-index:-2;
+}
+
+body::after{
+content:"";
+position:fixed;
+inset:-200px;
+background:
+radial-gradient(circle at center,rgba(0,229,255,0.08),transparent 70%);
+animation:gridRotate 30s linear infinite;
+z-index:-3;
 }
 
 @keyframes gridMove{
 0%{transform:translateY(0)}
-100%{transform:translateY(40px)}
+100%{transform:translateY(50px)}
+}
+
+@keyframes gridRotate{
+0%{transform:rotate(0deg)}
+100%{transform:rotate(360deg)}
 }
 
 .cursor-glow{
@@ -52,6 +69,8 @@ background:radial-gradient(circle,rgba(0,229,255,0.2),transparent 70%);
 pointer-events:none;
 z-index:0;
 }
+
+/* NAV */
 
 nav{
 display:flex;
@@ -103,6 +122,8 @@ background:rgba(255,255,255,0.12);
 box-shadow:0 0 20px rgba(0,229,255,0.4);
 }
 
+/* HERO */
+
 header{
 height:100vh;
 display:flex;
@@ -144,6 +165,8 @@ color:#00e5ff;
 letter-spacing:1px;
 }
 
+/* BUTTONS */
+
 .btn-group{
 margin-top:30px;
 display:flex;
@@ -179,6 +202,8 @@ border-color:#ff2a2a;
 opacity:0.7;
 }
 
+/* LAYOUT */
+
 .container{
 max-width:1100px;
 margin:auto;
@@ -206,6 +231,8 @@ transform:rotateX(6deg) rotateY(-6deg) scale(1.05);
 box-shadow:0 20px 60px rgba(0,229,255,0.25);
 }
 
+/* PROGRESS */
+
 .progress{
 margin-top:40px;
 }
@@ -232,6 +259,8 @@ width:0;
 to{width:var(--progress)}
 }
 
+/* MAP LOCK */
+
 .map-card{
 width:320px;
 height:200px;
@@ -253,32 +282,7 @@ letter-spacing:2px;
 color:#00e5ff;
 }
 
-.hud-line{
-position:fixed;
-height:1px;
-width:100%;
-background:linear-gradient(90deg,transparent,#00e5ff,transparent);
-animation:hudMove 6s linear infinite;
-opacity:0.4;
-}
-
-@keyframes hudMove{
-0%{transform:translateY(-100%)}
-100%{transform:translateY(100vh)}
-}
-
-.popup{
-position:fixed;
-bottom:40px;
-left:50%;
-transform:translateX(-50%);
-background:#ff2a2a;
-color:white;
-padding:12px 22px;
-border-radius:6px;
-opacity:0;
-transition:0.4s;
-}
+/* FOOTER */
 
 footer{
 text-align:center;
@@ -292,8 +296,6 @@ border-top:1px solid var(--border);
 </head>
 
 <body>
-
-<div class="hud-line"></div>
 
 <div id="popup" class="popup"></div>
 
@@ -341,33 +343,6 @@ APPLICATION
 
 </header>
 
-<div class="container" id="features">
-
-<div class="grid">
-
-<div class="card">
-<h3>ECONOMY</h3>
-<p>Ein realistisches und faires Wirtschaftssystem.</p>
-</div>
-
-<div class="card">
-<h3>ENGINE</h3>
-<p>Optimierter Code für maximale Stabilität.</p>
-</div>
-
-<div class="card">
-<h3>COMMUNITY</h3>
-<p><span id="discord-count">Loading</span> members online.</p>
-</div>
-
-</div>
-
-<div class="map-card">
-<div class="map-lock">ENCRYPTED MAP DATA</div>
-</div>
-
-</div>
-
 <div class="container" id="progress">
 
 <h2 style="font-family:Orbitron;color:white;text-align:center;margin-bottom:40px">
@@ -378,22 +353,22 @@ DEVELOPMENT PROGRESS
 
 <div class="progress-item">
 MAP BUILD
-<div class="progress-bar"><div class="progress-fill" style="--progress:90%"></div></div>
+<div class="progress-bar"><div class="progress-fill" style="--progress:5%"></div></div>
 </div>
 
 <div class="progress-item">
 POLICE SYSTEM
-<div class="progress-bar"><div class="progress-fill" style="--progress:70%"></div></div>
+<div class="progress-bar"><div class="progress-fill" style="--progress:3%"></div></div>
 </div>
 
 <div class="progress-item">
 ECONOMY
-<div class="progress-bar"><div class="progress-fill" style="--progress:55%"></div></div>
+<div class="progress-bar"><div class="progress-fill" style="--progress:6%"></div></div>
 </div>
 
 <div class="progress-item">
 VEHICLES
-<div class="progress-bar"><div class="progress-fill" style="--progress:30%"></div></div>
+<div class="progress-bar"><div class="progress-fill" style="--progress:2%"></div></div>
 </div>
 
 </div>
