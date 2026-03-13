@@ -3,208 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Königsbrunn | Community</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Königsbrunn | FiveM Projekt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&family=Inter:wght@200;400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #007cf0 0%, #00dfd8 100%);
-            --bg-color: #0b0e14;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --border-color: rgba(255, 255, 255, 0.1);
-            --font-gaming: 'Montserrat', sans-serif;
-            --font-main: 'Inter', sans-serif;
+            --accent: #0088ff;
+            --accent-glow: rgba(0, 136, 255, 0.3);
+            --bg: #06070a;
+            --glass: rgba(255, 255, 255, 0.02);
+            --border: rgba(255, 255, 255, 0.06);
         }
 
-        /* Smooth Scroll & Base */
-        html { scroll-behavior: smooth; }
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: default; }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            font-family: var(--font-main); 
-            background: var(--bg-color); 
-            color: #fff; 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); 
+            color: #ececec; 
             overflow-x: hidden;
+            font-weight: 200;
         }
 
-        /* Animierter Background-Verlauf im Hintergrund */
-        .bg-glow {
+        /* --- SUBTILER ANIMIERTER BG --- */
+        #canvas-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% -20%, #004282 0%, transparent 50%),
-                        radial-gradient(circle at -10% 50%, #001f3d 0%, transparent 40%);
+            background: radial-gradient(circle at 50% 50%, #0a111a 0%, var(--bg) 80%);
             z-index: -2;
         }
 
-        /* Navigation */
+        .glow-sphere {
+            position: fixed; width: 40vw; height: 40vw;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            top: -10%; right: -10%; z-index: -1;
+            animation: drift 15s infinite alternate ease-in-out;
+        }
+
+        @keyframes drift {
+            from { transform: translate(0, 0); }
+            to { transform: translate(-10%, 15%); }
+        }
+
+        /* --- SMALL HEADER BAR --- */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 8%; position: fixed; width: 100%; z-index: 1000;
-            backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color);
+            padding: 20px 6%; position: fixed; width: 100%; z-index: 1000;
+            backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
         }
-        .logo { font-family: var(--font-gaming); font-weight: 900; font-size: 1.4rem; letter-spacing: -1px; }
-        .logo span { background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.9rem; letter-spacing: 2px; }
+        .logo span { color: var(--accent); }
 
-        /* Hero Bereich */
+        .status-tag {
+            font-size: 0.6rem; letter-spacing: 1px; color: #ffcc00;
+            display: flex; align-items: center; gap: 8px;
+            text-transform: uppercase; border: 1px solid rgba(255, 204, 0, 0.2);
+            padding: 4px 10px; border-radius: 20px;
+        }
+
+        /* --- MAIN HERO --- */
         header {
             height: 100vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
-            padding: 0 20px; position: relative;
+        }
+
+        .game-label {
+            font-size: 0.65rem; letter-spacing: 5px; opacity: 0.5;
+            margin-bottom: 15px; text-transform: uppercase;
+            animation: fadeIn 2s ease;
         }
 
         .hero-title {
-            font-family: var(--font-gaming); font-size: clamp(3rem, 10vw, 7rem);
-            font-weight: 900; line-height: 0.9; margin-bottom: 20px;
-            letter-spacing: -2px;
-            animation: float 6s ease-in-out infinite;
+            font-family: 'Montserrat', sans-serif; font-size: 3.5rem;
+            font-weight: 300; letter-spacing: -1px; line-height: 1.1; margin-bottom: 30px;
+        }
+        .hero-title b { font-weight: 700; color: #fff; }
+
+        /* --- BUTTONS (SMALL & CLEAN) --- */
+        .btn-wrap { display: flex; gap: 15px; }
+
+        .btn {
+            padding: 12px 28px; border-radius: 4px; font-size: 0.7rem;
+            font-family: 'Montserrat', sans-serif; font-weight: 700;
+            text-decoration: none; transition: 0.4s; letter-spacing: 1px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-main { background: var(--accent); color: white; border: none; }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--accent-glow); }
+
+        .btn-locked { 
+            background: transparent; color: #555; border: 1px solid #333; 
+            cursor: not-allowed; opacity: 0.6;
+        }
+        .btn-locked:active { animation: shake 0.3s; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        /* --- FEATURE SECTION --- */
+        .content-grid {
+            max-width: 1000px; margin: -100px auto 100px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+            padding: 0 20px;
         }
 
-        .hero-subtitle {
-            font-size: 1.2rem; opacity: 0.7; max-width: 600px; margin-bottom: 40px;
-            line-height: 1.6;
+        .mini-card {
+            background: var(--glass); border: 1px solid var(--border);
+            padding: 30px; border-radius: 8px; transition: 0.4s;
+            opacity: 0; transform: translateY(20px);
         }
-
-        /* Moderne Buttons */
-        .btn-group { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+        .mini-card.active { opacity: 1; transform: translateY(0); }
+        .mini-card:hover { border-color: var(--accent); background: rgba(255,255,255,0.04); }
         
-        .main-btn {
-            padding: 18px 40px; border-radius: 50px; border: none;
-            font-family: var(--font-gaming); font-weight: 700; font-size: 1rem;
-            color: white; background: var(--primary-gradient);
-            box-shadow: 0 10px 30px rgba(0, 124, 240, 0.3);
-            text-decoration: none; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .main-btn:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(0, 124, 240, 0.5); }
+        .mini-card h4 { font-size: 0.75rem; letter-spacing: 1px; color: var(--accent); margin-bottom: 10px; text-transform: uppercase; }
+        .mini-card p { font-size: 0.8rem; line-height: 1.6; color: #aaa; }
 
-        .sec-btn {
-            padding: 18px 40px; border-radius: 50px; border: 1px solid var(--border-color);
-            font-family: var(--font-gaming); font-weight: 700; font-size: 1rem;
-            color: white; background: rgba(255,255,255,0.05);
-            text-decoration: none; transition: 0.3s;
+        /* --- DEV INFO --- */
+        .dev-credit {
+            margin-top: 80px; font-size: 0.6rem; letter-spacing: 2px;
+            opacity: 0.4; text-transform: uppercase;
         }
-        .sec-btn:hover { background: rgba(255,255,255,0.1); border-color: #00dfd8; }
+        .dev-name { color: var(--accent); font-weight: 700; }
 
-        /* Feature Kacheln (Bento Style) */
-        .container { max-width: 1200px; margin: 0 auto; padding: 100px 20px; }
-        
-        .grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+        footer { 
+            padding: 40px; text-align: center; font-size: 0.55rem; 
+            opacity: 0.3; letter-spacing: 2px; font-family: 'Montserrat', sans-serif;
         }
 
-        .card {
-            background: var(--card-bg); border: 1px solid var(--border-color);
-            padding: 40px; border-radius: 30px; transition: 0.4s ease;
-            position: relative; overflow: hidden;
-        }
-        .card:hover { 
-            transform: translateY(-10px); background: rgba(255,255,255,0.06); 
-            border-color: #00dfd8;
-        }
-        .card h3 { font-family: var(--font-gaming); font-size: 1.5rem; margin-bottom: 15px; }
-        .card p { opacity: 0.6; line-height: 1.7; }
-
-        /* Team Sektion */
-        .team-section { text-align: center; margin-top: 100px; }
-        .team-grid {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 50px;
-        }
-        .team-member {
-            background: var(--card-bg); border: 1px solid var(--border-color);
-            padding: 20px 40px; border-radius: 20px; display: flex; align-items: center; gap: 15px;
-            transition: 0.3s;
-        }
-        .team-member:hover { border-color: #007cf0; background: rgba(0, 124, 240, 0.05); }
-        .dot { width: 10px; height: 10px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 10px #00ff88; }
-
-        footer { padding: 60px; text-align: center; opacity: 0.4; font-size: 0.9rem; }
-
-        /* Animationen beim Scrollen */
-        .reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 0.5; } }
 
     </style>
 </head>
 <body>
 
-<div class="bg-glow"></div>
+<div id="canvas-bg"></div>
+<div class="glow-sphere"></div>
 
 <nav>
-    <div class="logo">KÖNIGSBRUNN<span>.RP</span></div>
-    <div style="font-weight: 600; font-size: 0.8rem; color: #00ff88;">● SERVER ONLINE</div>
+    <div class="logo">KÖNIGS<span>BRUNN</span></div>
+    <div class="status-tag">
+        <span style="display:inline-block; width:6px; height:6px; background:#ffcc00; border-radius:50%; animation: pulse 1.5s infinite;"></span>
+        System im Bau
+    </div>
 </nav>
 
 <header>
-    <h1 class="hero-title">DISTRICT<br>50-KM²</h1>
-    <p class="hero-subtitle">Willkommen in Königsbrunn. Tauche ein in eine Welt voller Möglichkeiten, einer starken Community und echtem Roleplay.</p>
-    <div class="btn-group">
-        <a href="https://discord.gg/QX5xj22dGW" class="main-btn">JETZT BEITRETEN</a>
-        <a href="#features" class="sec-btn">MEHR ERFAHREN</a>
+    <div class="game-label">Platform: FiveM / Roleplay</div>
+    <h1 class="hero-title">Königsbrunn <b>Project</b></h1>
+    
+    <div class="btn-wrap">
+        <a href="https://discord.gg/QX5xj22dGW" class="btn btn-main">DISCORD</a>
+        <div class="btn btn-locked" title="Bereich noch im Bau">MEHR ERFAHREN</div>
+    </div>
+
+    <div class="dev-credit">
+        Lead System Architecture by <span class="dev-name">mrlenny13</span>
     </div>
 </header>
 
-<div class="container" id="features">
-    <div class="grid">
-        <div class="card reveal">
-            <h3>Community</h3>
-            <p>Bei uns stehst du im Mittelpunkt. Ein faires Miteinander und Support auf Augenhöhe sind unser Standard.</p>
-        </div>
-        <div class="card reveal">
-            <h3>Modernes RP</h3>
-            <p>Kein komplizierter Schnickschnack. Einfach einreisen, Rolle wählen und loslegen. Wir setzen auf Qualität.</p>
-        </div>
-        <div class="card reveal">
-            <h3>Events</h3>
-            <p>Regelmäßige Stadt-Events, von illegalen Straßenrennen bis hin zu großen Firmenfeiern. Hier ist immer was los.</p>
-        </div>
+<div class="content-grid">
+    <div class="mini-card reveal">
+        <h4>Performance</h4>
+        <p>Ein schlankes Framework sorgt für maximale FPS und flüssiges Gameplay.</p>
     </div>
-
-    <div class="team-section">
-        <h2 class="reveal" style="font-family: var(--font-gaming); font-size: 2rem;">DAS TEAM</h2>
-        <div class="team-grid">
-            <div class="team-member reveal">
-                <div class="dot"></div>
-                <div>
-                    <div style="font-weight: 700;">lucas.aus.at</div>
-                    <div style="font-size: 0.8rem; opacity: 0.5;">Leitung</div>
-                </div>
-            </div>
-            <div class="team-member reveal">
-                <div class="dot"></div>
-                <div>
-                    <div style="font-weight: 700;">joge2286</div>
-                    <div style="font-size: 0.8rem; opacity: 0.5;">Leitung</div>
-                </div>
-            </div>
-            <div class="team-member reveal">
-                <div class="dot" style="background: #00d1ff; box-shadow: 0 0 10px #00d1ff;"></div>
-                <div>
-                    <div style="font-weight: 700;">benschi1503</div>
-                    <div style="font-size: 0.8rem; opacity: 0.5;">Entwicklung</div>
-                </div>
-            </div>
-        </div>
+    <div class="mini-card reveal">
+        <h4>Gamedev</h4>
+        <p>Eigens entwickelte Scripte von <b>mrlenny13</b> für ein einzigartiges System.</p>
+    </div>
+    <div class="mini-card reveal">
+        <h4>Status</h4>
+        <p>Die Alpha-Phase wird derzeit vorbereitet. Alle Systeme auf Standby.</p>
     </div>
 </div>
 
 <footer>
-    &copy; 2026 Königsbrunn Roleplay // Dein Distrikt, deine Regeln.
+    &copy; 2026 KÖNIGSBRUNN // DEVELOPED BY MRLENNY13 & TEAM
 </footer>
 
 <script>
-    // Reveal Animation beim Scrollen
-    const observer = new IntersectionObserver((entries) => {
+    // Simple Scroll Reveal
+    const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.2 });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('.mini-card').forEach(card => observer.observe(card));
+
+    // Locked Interaction
+    document.querySelector('.btn-locked').addEventListener('click', () => {
+        // Kleiner visueller Hinweis statt nervigem Alert
+        console.log("Status: Gesperrt (Work in Progress)");
+    });
+
+    // Subtile Maus-Bewegung für den Glow
+    const sphere = document.querySelector('.glow-sphere');
+    document.addEventListener('mousemove', (e) => {
+        const x = e.clientX / window.innerWidth;
+        const y = e.clientY / window.innerHeight;
+        sphere.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
+    });
 </script>
 
 </body>
