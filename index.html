@@ -3,239 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Königsbrunn | Roblox Project</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
+    <title>KÖNIGSBRUNN | ROBLOX NEXT-GEN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent: #0088ff;
-            --accent-2: #00ffcc;
-            --accent-glow: rgba(0, 136, 255, 0.4);
-            --bg: #04060a;
-            --glass: rgba(255, 255, 255, 0.02);
-            --border: rgba(255, 255, 255, 0.08);
-            --gradient: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+            --led-blue: #00f2ff;
+            --led-purple: #bc00ff;
+            --led-red: #ff004c;
+            --bg: #020205;
+            --card-bg: rgba(10, 10, 20, 0.8);
+            --neon-shadow: 0 0 15px rgba(0, 242, 255, 0.5);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         body { 
-            font-family: 'Inter', sans-serif; 
+            font-family: 'Rajdhani', sans-serif; 
             background: var(--bg); 
-            color: #ececec; 
+            color: #fff; 
             overflow-x: hidden;
-            font-weight: 200;
         }
+
+        /* --- PRELOADER SYSTEM --- */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; transition: 1s ease-out;
+        }
+        .load-bar { width: 200px; height: 2px; background: #111; position: relative; margin-top: 20px; overflow: hidden; }
+        .load-progress { width: 0%; height: 100%; background: var(--led-blue); box-shadow: var(--neon-shadow); transition: 0.5s; }
+        .load-text { font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 5px; color: var(--led-blue); text-shadow: var(--neon-shadow); }
 
         /* --- BACKGROUND ANIMATION --- */
-        #bg-canvas {
+        .grid-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 20% 30%, #0a1b2d 0%, transparent 40%),
-                        radial-gradient(circle at 80% 70%, #081e1c 0%, transparent 40%);
-            z-index: -2;
+            background-image: linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px; z-index: -2; transform: perspective(500px) rotateX(60deg);
+            transform-origin: top; animation: moveGrid 20s linear infinite;
         }
+        @keyframes moveGrid { from { background-position: 0 0; } to { background-position: 0 100%; } }
 
-        .floating-blob {
-            position: fixed; width: 50vw; height: 50vw;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-            z-index: -1; filter: blur(50px);
-            animation: drift 20s infinite alternate ease-in-out;
-        }
-
-        @keyframes drift {
-            from { transform: translate(-10%, -10%) rotate(0deg); }
-            to { transform: translate(20%, 15%) rotate(180deg); }
-        }
-
-        /* --- NAVIGATION --- */
+        /* --- NAVBAR --- */
         nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 6%; position: fixed; width: 100%; z-index: 1000;
-            backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+            padding: 20px 5%; display: flex; justify-content: space-between; align-items: center;
+            position: fixed; width: 100%; z-index: 100; backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
         }
-        .logo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1rem; letter-spacing: 2px; }
-        .logo span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        .status-tag {
-            font-size: 0.55rem; letter-spacing: 2px; color: #ffcc00;
-            display: flex; align-items: center; gap: 8px; font-weight: 600;
-            text-transform: uppercase; border: 1px solid rgba(255, 204, 0, 0.2);
-            padding: 5px 12px; border-radius: 50px; background: rgba(255, 204, 0, 0.05);
-        }
+        .nav-logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.2rem; letter-spacing: 2px; }
+        .nav-logo span { color: var(--led-blue); text-shadow: var(--neon-shadow); }
 
         /* --- HERO --- */
         header {
-            height: 100vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center;
-            padding: 0 10%;
+            height: 100vh; display: flex; flex-direction: column; justify-content: center;
+            align-items: center; text-align: center; position: relative;
         }
-
-        .roblox-badge {
-            background: rgba(255,255,255,0.05); padding: 6px 15px; border-radius: 50px;
-            font-size: 0.6rem; letter-spacing: 4px; text-transform: uppercase;
-            border: 1px solid var(--border); margin-bottom: 20px; color: var(--accent-2);
+        .hero-glitch {
+            font-family: 'Orbitron'; font-size: clamp(2rem, 10vw, 6rem); font-weight: 900;
+            text-transform: uppercase; line-height: 1; letter-spacing: -2px;
+            background: linear-gradient(to bottom, #fff 50%, #555 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
+        .hero-tagline { font-size: 1.2rem; letter-spacing: 8px; color: var(--led-purple); margin: 20px 0; font-weight: 700; text-transform: uppercase; }
 
-        .hero-title {
-            font-family: 'Montserrat', sans-serif; font-size: clamp(2rem, 8vw, 4.5rem);
-            font-weight: 300; letter-spacing: -2px; line-height: 1; margin-bottom: 30px;
+        /* --- LED BUTTONS --- */
+        .btn-box { display: flex; gap: 20px; margin-top: 30px; }
+        .btn-gaming {
+            padding: 15px 40px; font-family: 'Orbitron'; font-size: 0.7rem; font-weight: 700;
+            text-decoration: none; color: #fff; position: relative; overflow: hidden;
+            border: 1px solid var(--led-blue); transition: 0.3s; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
         }
-        .hero-title b { font-weight: 900; color: #fff; }
+        .btn-gaming:hover { background: var(--led-blue); color: #000; box-shadow: 0 0 30px var(--led-blue); transform: scale(1.05); }
+        .btn-disabled { border-color: #333; color: #333; cursor: not-allowed; }
 
-        /* --- BUTTONS --- */
-        .btn-wrap { display: flex; gap: 15px; }
-        .btn {
-            padding: 14px 32px; border-radius: 8px; font-size: 0.7rem;
-            font-family: 'Montserrat', sans-serif; font-weight: 700;
-            text-decoration: none; transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); 
-            letter-spacing: 2px; text-transform: uppercase;
+        /* --- CONTENT SECTION --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 100px 20px; }
+        .section-title { font-family: 'Orbitron'; font-size: 1.5rem; margin-bottom: 50px; display: flex; align-items: center; gap: 15px; }
+        .section-title::after { content: ''; height: 2px; flex: 1; background: linear-gradient(90deg, var(--led-blue), transparent); }
+
+        /* --- GAME CARDS --- */
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .feature-card {
+            background: var(--card-bg); border-left: 4px solid var(--led-purple); padding: 30px;
+            transition: 0.3s; position: relative;
         }
-        .btn-main { background: var(--gradient); color: white; border: none; box-shadow: 0 10px 30px var(--accent-glow); }
-        .btn-main:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 40px var(--accent-glow); }
+        .feature-card:hover { transform: skewX(-2deg) translateY(-10px); background: rgba(188, 0, 255, 0.1); border-color: var(--led-blue); }
+        .feature-card h3 { font-family: 'Orbitron'; font-size: 0.9rem; margin-bottom: 15px; color: var(--led-blue); }
+        .feature-card p { opacity: 0.7; font-size: 0.9rem; line-height: 1.6; }
 
-        .btn-locked { background: transparent; color: #444; border: 1px solid #222; cursor: not-allowed; }
-        .btn-locked:active { animation: shake 0.3s; }
-
-        @keyframes shake { 0%,100% {transform:translateX(0)} 25% {transform:translateX(-5px)} 75% {transform:translateX(5px)} }
-
-        /* --- INFO SECTIONS --- */
-        .section-container { max-width: 1200px; margin: 0 auto; padding: 100px 20px; }
-        
-        .info-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;
+        /* --- TEAM LIST (KORRIGIERT) --- */
+        .team-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .member {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+            padding: 20px; text-align: center; transition: 0.3s;
         }
+        .member:hover { border-color: var(--led-purple); box-shadow: inset 0 0 15px rgba(188, 0, 255, 0.2); }
+        .m-name { font-family: 'Orbitron'; font-weight: 700; font-size: 0.9rem; display: block; }
+        .m-role { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; color: var(--led-blue); }
 
-        .info-card {
-            background: var(--glass); border: 1px solid var(--border);
-            padding: 40px; border-radius: 20px; transition: 0.5s;
-            position: relative; overflow: hidden;
-        }
-        .info-card:hover { border-color: var(--accent-2); transform: translateY(-10px); background: rgba(255,255,255,0.04); }
-        
-        .info-card h3 { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: var(--accent-2); margin-bottom: 20px; letter-spacing: 2px; }
-        .info-card p { font-size: 0.85rem; line-height: 1.8; color: #bbb; margin-bottom: 20px; }
+        footer { padding: 50px; text-align: center; font-family: 'Orbitron'; font-size: 0.6rem; opacity: 0.4; letter-spacing: 3px; }
 
-        /* --- PROGRESS BARS --- */
-        .progress-box { margin-bottom: 15px; }
-        .progress-label { display: flex; justify-content: space-between; font-size: 0.6rem; margin-bottom: 5px; opacity: 0.6; }
-        .progress-bg { height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; }
-        .progress-fill { height: 100%; background: var(--gradient); border-radius: 2px; transition: 2s width ease-in-out; }
-
-        /* --- TEAM SECTION --- */
-        .team-title { text-align: center; font-family: 'Montserrat', sans-serif; font-size: 1.2rem; letter-spacing: 5px; margin-bottom: 60px; opacity: 0.8; }
-        
-        .team-list {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;
-        }
-
-        .member-card {
-            background: var(--glass); border: 1px solid var(--border);
-            padding: 20px 30px; border-radius: 12px; display: flex; align-items: center; gap: 15px;
-            transition: 0.3s;
-        }
-        .member-card:hover { border-color: var(--accent); background: rgba(0, 136, 255, 0.05); transform: translateX(10px); }
-        
-        .member-info h4 { font-size: 0.85rem; font-weight: 600; color: #fff; }
-        .member-info span { font-size: 0.65rem; color: var(--accent); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
-
-        .role-dot { width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 10px currentColor; }
-
-        /* --- REVEAL --- */
-        .reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
-
-        footer { padding: 80px; text-align: center; font-size: 0.6rem; opacity: 0.3; letter-spacing: 3px; border-top: 1px solid var(--border); }
-
-        @keyframes pulse { 0% {opacity: 0.4} 50% {opacity: 1} 100% {opacity: 0.4} }
     </style>
 </head>
 <body>
 
-<div id="bg-canvas"></div>
-<div class="floating-blob"></div>
+<div id="loader">
+    <div class="load-text">INITIALIZING KÖNIGSBRUNN...</div>
+    <div class="load-bar"><div class="load-progress" id="progress"></div></div>
+</div>
+
+<div class="grid-bg"></div>
 
 <nav>
-    <div class="logo">KÖNIGS<span>BRUNN</span></div>
-    <div class="status-tag">
-        <span style="display:inline-block; width:6px; height:6px; background:#ffcc00; border-radius:50%; animation: pulse 1.5s infinite;"></span>
-        Roblox Alpha in Production
-    </div>
+    <div class="nav-logo">KÖNIGS<span>BRUNN</span></div>
+    <div style="font-size: 0.7rem; color: var(--led-blue); font-weight: bold; text-transform: uppercase;">Build by Lucas</div>
 </nav>
 
 <header>
-    <div class="roblox-badge">Roblox Engine v9.0</div>
-    <h1 class="hero-title">Königsbrunn <b>Vision</b></h1>
+    <h1 class="hero-glitch">CITY ROLEPLAY</h1>
+    <div class="hero-tagline">ROBLOX PROJECT 2026</div>
     
-    <div class="btn-wrap">
-        <a href="https://discord.gg/QX5xj22dGW" class="btn btn-main">DISCORD BEITRETEN</a>
-        <div class="btn btn-locked">🔒 SPIEL STARTEN</div>
+    <div class="btn-box">
+        <a href="https://discord.gg/QX5xj22dGW" class="btn btn-gaming">COMMUNITY DISCORD</a>
+        <div class="btn btn-gaming btn-disabled">SYSTEM OFFLINE 🔒</div>
     </div>
 
-    <div style="margin-top: 40px; font-size: 0.6rem; opacity: 0.4; letter-spacing: 2px;">
-        ENGINEERED BY <span style="color:var(--accent-2); font-weight:700;">MRLENNY13</span> & TECH-TEAM
+    <div style="position: absolute; bottom: 50px; font-size: 0.6rem; opacity: 0.5; letter-spacing: 5px;">
+        SCROLL TO ENTER DATA-STREAM
     </div>
 </header>
 
-<div class="section-container">
-    <div class="info-grid">
-        <div class="info-card reveal">
-            <h3>01 // DIE VISION</h3>
-            <p>Wir erschaffen eine neue Art von Roblox-Immersion. Realistisches Stadtsystem, komplexe Jobs und eine Wirtschaft, die von Spielern gesteuert wird.</p>
-            <div class="progress-box">
-                <div class="progress-label"><span>Core System</span><span>85%</span></div>
-                <div class="progress-bg"><div class="progress-fill" style="width: 85%;"></div></div>
-            </div>
+<div class="container">
+    <h2 class="section-title">GAME FEATURES</h2>
+    <div class="game-grid">
+        <div class="feature-card reveal">
+            <h3>MODERN ECONOMY</h3>
+            <p>Ein dynamisches Wirtschaftssystem. Handle mit Gütern, kaufe Immobilien und beherrsche den Markt von Königsbrunn.</p>
         </div>
-
-        <div class="info-card reveal">
-            <h3>02 // TECHNOLOGY</h3>
-            <p>Unter der Leitung von <b>mrlenny13</b> nutzen wir eigene Luau-Module für flüssige Animationen und ein lag-freies Erlebnis auf allen Geräten.</p>
-            <div class="progress-box">
-                <div class="progress-label"><span>Optimization</span><span>92%</span></div>
-                <div class="progress-bg"><div class="progress-fill" style="width: 92%;"></div></div>
-            </div>
+        <div class="feature-card reveal">
+            <h3>HIGH-END VEHICLES</h3>
+            <p>Eigene Fahrzeugphysik und detaillierte Modelle. Jedes Auto ist ein Unikat mit speziellem Tuning-Potenzial.</p>
+        </div>
+        <div class="feature-card reveal">
+            <h3>LEGAL & ILLEGAL JOBS</h3>
+            <p>Wähle deinen Weg: Ob als Officer beim KPD oder als Drahtzieher im Untergrund. Deine Entscheidung zählt.</p>
         </div>
     </div>
 
-    <div class="team-section reveal" style="margin-top: 120px;">
-        <h2 class="team-title">ADMINISTRATION</h2>
-        <div class="team-list">
-            <div class="member-card">
-                <div class="role-dot" style="color: #ff3e3e; background: #ff3e3e;"></div>
-                <div class="member-info">
-                    <h4>lucas.aus.at</h4>
-                    <span>Projektleitung</span>
-                </div>
-            </div>
-            <div class="member-card">
-                <div class="role-dot" style="color: #ff3e3e; background: #ff3e3e;"></div>
-                <div class="member-info">
-                    <h4>joge2286</h4>
-                    <span>Projektleitung</span>
-                </div>
-            </div>
-            <div class="member-card">
-                <div class="role-dot" style="color: #00d1ff; background: #00d1ff;"></div>
-                <div class="member-info">
-                    <h4>mrlenny13</h4>
-                    <span>Lead Development</span>
-                </div>
-            </div>
-            <div class="member-card">
-                <div class="role-dot" style="color: #00d1ff; background: #00d1ff;"></div>
-                <div class="member-info">
-                    <h4>benschi1503</h4>
-                    <span>Entwicklung</span>
-                </div>
-            </div>
+    <h2 class="section-title" style="margin-top: 100px;">SYSTEM ARCHITECTURE</h2>
+    <div class="team-container">
+        <div class="member reveal">
+            <span class="m-name">lucas.aus.at</span>
+            <span class="m-role">Project Owner</span>
+        </div>
+        <div class="member reveal">
+            <span class="m-name">joge2286</span>
+            <span class="m-role">Project Owner</span>
+        </div>
+        <div class="member reveal" style="border-color: var(--led-blue);">
+            <span class="m-name">benschi1503</span>
+            <span class="m-role" style="color: var(--led-purple);">Lead Developer</span>
+        </div>
+        <div class="member reveal">
+            <span class="m-name">mrlenny13</span>
+            <span class="m-role">Developer</span>
         </div>
     </div>
 </div>
 
 <footer>
-    &copy; 2026 KÖNIGSBRUNN NETWORK // ROBLOX BRANCH // SECURED BY VISION-CORE
+    DATA TERMINAL v1.0.4 // KÖNIGSBRUNN // NO COPYS ALLOWED
 </footer>
 
 <script>
-    // Reveal Observer
+    // Preloader Logic
+    let progress = document.getElementById('progress');
+    let loader = document.getElementById('loader');
+    let width = 0;
+    
+    let interval = setInterval(() => {
+        if (width >= 100) {
+            clearInterval(interval);
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.display = 'none', 1000);
+        } else {
+            width += Math.random() * 15;
+            if(width > 100) width = 100;
+            progress.style.width = width + '%';
+        }
+    }, 150);
+
+    // Scroll Reveal
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) entry.target.classList.add('active');
@@ -243,15 +202,6 @@
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // Glow Move
-    document.addEventListener('mousemove', e => {
-        const blob = document.querySelector('.floating-blob');
-        const x = e.clientX;
-        const y = e.clientY;
-        blob.style.left = (x - window.innerWidth/4) + 'px';
-        blob.style.top = (y - window.innerHeight/4) + 'px';
-    });
 </script>
 
 </body>
