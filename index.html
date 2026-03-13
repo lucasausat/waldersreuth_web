@@ -3,203 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KÖNIGSBRUNN | OFFICIAL</title>
+<title>Stadt Königsbrunn | Offizielle Website</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
-    --primary:#0062ff;
-    --secondary:#00e5ff;
-    --bg-dark:#05070a;
-    --border:rgba(255,255,255,0.06);
-    --text-main:#cecece;
-    --text-bright:#ffffff;
+--primary:#1e4fa3;
+--accent:#2f7df6;
+--bg:#f4f6f9;
+--text:#1a1a1a;
 }
 
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-    font-family:'Inter',sans-serif;
-    background:#05070a;
-    color:var(--text-main);
-    overflow-x:hidden;
-}
-
-/* CYBER GRID BACKGROUND */
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    background-image:
-    linear-gradient(rgba(0,229,255,0.06) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,229,255,0.06) 1px,transparent 1px);
-    background-size:50px 50px;
-    animation:gridMove 12s linear infinite;
-    z-index:-2;
-}
-
-@keyframes gridMove{
-    0%{transform:translateY(0)}
-    100%{transform:translateY(50px)}
-}
-
-.cursor-glow{
-    position:fixed;
-    width:350px;
-    height:350px;
-    background:radial-gradient(circle,rgba(0,229,255,0.2),transparent 70%);
-    pointer-events:none;
-    z-index:0;
-    transform: translate(-50%, -50%);
+font-family:'Inter',sans-serif;
+background:var(--bg);
+color:var(--text);
 }
 
 /* NAV */
+
 nav{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:20px 8%;
-    position:fixed;
-    width:100%;
-    backdrop-filter:blur(20px);
-    border-bottom:1px solid var(--border);
-    z-index:1000;
+background:white;
+padding:18px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #ddd;
 }
 
-.logo{ font-family:'Orbitron'; font-weight:900; font-size:1.1rem; color: white; }
-.logo span{ color: var(--secondary); }
-
-.nav-right{ display:flex; gap:12px; }
-.nav-right a{
-    padding:8px 18px; border-radius:8px; text-decoration:none; font-size:0.7rem;
-    letter-spacing:1px; text-transform:uppercase; color:white;
-    background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08);
-    transition:0.3s;
+.logo{
+font-weight:800;
+font-size:1.2rem;
+color:var(--primary);
 }
 
-.nav-right a:hover{ background:rgba(255,255,255,0.12); box-shadow:0 0 20px rgba(0,229,255,0.4); }
+.nav-links{
+display:flex;
+gap:25px;
+}
+
+.nav-links a{
+text-decoration:none;
+color:#444;
+font-weight:500;
+}
+
+.nav-links a:hover{
+color:var(--accent);
+}
 
 /* HERO */
+
 header{
-    height:100vh; display:flex; flex-direction:column;
-    justify-content:center; align-items:center; text-align:center;
+height:420px;
+background:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),
+url("https://images.unsplash.com/photo-1505761671935-60b3a7427bad?q=80&w=1600") center/cover;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+color:white;
+text-align:center;
+padding:20px;
 }
 
-.hero-title{
-    font-family:'Orbitron'; font-size:clamp(3rem,9vw,6rem); font-weight:900;
-    letter-spacing:3px; color:white;
-    text-shadow: 0 0 10px rgba(0,229,255,0.6);
+header h1{
+font-size:3rem;
+font-weight:800;
 }
 
-.hero-desc{ max-width:520px; margin-top:20px; color:#888; font-size:0.95rem; }
-
-.server-status{ margin-top:15px; font-size:0.75rem; color:#00e5ff; letter-spacing:1px; }
-
-/* BUTTONS */
-.btn-group{ margin-top:30px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
-.btn{
-    padding:14px 30px; border-radius:8px; font-weight:700; font-size:0.75rem;
-    text-decoration:none; text-transform:uppercase; letter-spacing:2px;
-    transition:0.3s; color:white; border:1px solid rgba(0,229,255,0.4);
-    background:rgba(0,229,255,0.08); cursor:pointer;
+header p{
+margin-top:15px;
+font-size:1.1rem;
+opacity:0.9;
 }
 
-.btn:hover{ background:rgba(0,229,255,0.2); box-shadow:0 0 20px #00e5ff; transform:translateY(-3px); }
-.locked{ border-color:#ff2a2a; opacity:0.7; }
+/* GRID */
 
-/* LAYOUT */
-.container{ max-width:1100px; margin:auto; padding:80px 20px; }
-.grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+.container{
+max-width:1100px;
+margin:auto;
+padding:60px 20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
 .card{
-    padding:35px; border-radius:16px; background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.08); backdrop-filter:blur(30px);
-    transition:0.4s;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+transition:0.3s;
 }
-.card:hover{ transform: scale(1.05); box-shadow:0 20px 60px rgba(0,229,255,0.25); }
 
-/* PROGRESS */
-.progress-item{ margin-bottom:18px; color: white; font-family: 'Orbitron'; font-size: 0.8rem;}
-.progress-bar{ height:6px; background:#111; border-radius:4px; overflow:hidden; margin-top: 8px;}
-.progress-fill{ height:100%; background:linear-gradient(90deg,#0062ff,#00e5ff); width: var(--p-width); }
+.card:hover{
+transform:translateY(-5px);
+}
+
+.card h3{
+color:var(--primary);
+margin-bottom:10px;
+}
+
+/* NEWS */
+
+.news{
+margin-top:60px;
+}
+
+.news-item{
+background:white;
+padding:20px;
+border-left:4px solid var(--accent);
+margin-bottom:15px;
+}
 
 /* FOOTER */
-footer{ text-align:center; padding:60px; color:#444; font-size:0.7rem; border-top:1px solid var(--border); }
 
-/* POPUP */
-#popup {
-    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-    background: #ff2a2a; color: white; padding: 10px 20px; border-radius: 5px;
-    font-family: 'Orbitron'; font-size: 0.8rem; opacity: 0; transition: 0.3s; z-index: 2000;
+footer{
+background:#111;
+color:#aaa;
+text-align:center;
+padding:40px;
+margin-top:60px;
+font-size:0.85rem;
 }
+
 </style>
 </head>
 
 <body>
 
-<div id="popup"></div>
-
 <nav>
-    <div class="logo">KÖNIGS<span>BRUNN</span></div>
-    <div class="nav-right">
-        <a href="#progress">Progress</a>
-        <a href="#staff">Staff</a>
-        <a href="https://discord.gg/QX5xj22dGW" target="_blank">Discord</a>
-    </div>
+<div class="logo">STADT KÖNIGSBRUNN</div>
+
+<div class="nav-links">
+<a href="#">Startseite</a>
+<a href="#">Bürgerservice</a>
+<a href="#">Stadt & Leben</a>
+<a href="#">Tourismus</a>
+<a href="#">Kontakt</a>
+</div>
 </nav>
 
 <header>
-    <h1 class="hero-title">KÖNIGSBRUNN<br>CITY ROLEPLAY</h1>
-    <p class="hero-desc">Königsbrunn ist ein neues Roblox Roleplay Projekt. Die Stadt befindet sich aktuell in Entwicklung.</p>
-    <div class="server-status">🟡 GAME IN DEVELOPMENT</div>
-    <div class="btn-group">
-        <a href="https://discord.gg/QX5xj22dGW" class="btn">DISCORD</a>
-        <button class="btn locked" onclick="showPopup('Game is currently under development')">GAME</button>
-        <button class="btn locked" onclick="showPopup('Applications are currently closed')">APPLICATION</button>
-    </div>
+<h1>Willkommen in Königsbrunn</h1>
+<p>Offizielle Website der Stadt Königsbrunn</p>
 </header>
 
-<div class="container" id="progress">
-    <h2 style="font-family:Orbitron;color:white;text-align:center;margin-bottom:40px">DEVELOPMENT PROGRESS</h2>
-    <div class="progress-item">MAP BUILD<div class="progress-bar"><div class="progress-fill" style="--p-width:5%"></div></div></div>
-    <div class="progress-item">POLICE SYSTEM<div class="progress-bar"><div class="progress-fill" style="--p-width:3%"></div></div></div>
-    <div class="progress-item">ECONOMY<div class="progress-bar"><div class="progress-fill" style="--p-width:6%"></div></div></div>
-    <div class="progress-item">VEHICLES<div class="progress-bar"><div class="progress-fill" style="--p-width:2%"></div></div></div>
+<div class="container">
+
+<div class="grid">
+
+<div class="card">
+<h3>🏛 Rathaus</h3>
+<p>Informationen zu Verwaltung, Bürgerbüro und Öffnungszeiten.</p>
 </div>
 
-<div class="container" id="staff">
-    <h2 style="font-family:Orbitron;font-size:2rem;text-align:center;margin-bottom:50px;color:white">PROJECT STAFF</h2>
-    <div class="grid">
-        <div class="card">lucas.aus.at<br><span style="color:#00e5ff;font-size:0.8rem">Management</span></div>
-        <div class="card">joge2286<br><span style="color:#00e5ff;font-size:0.8rem">Management</span></div>
-        <div class="card">benschi1503<br><span style="color:#00e5ff;font-size:0.8rem">Lead Development</span></div>
-        <div class="card">mrlenny13<br><span style="color:#00e5ff;font-size:0.8rem">Developer</span></div>
-    </div>
+<div class="card">
+<h3>📄 Bürgerservice</h3>
+<p>Anträge, Formulare und Online-Services der Stadt.</p>
 </div>
 
-<footer>© 2026 KÖNIGSBRUNN — ALL RIGHTS RESERVED</footer>
+<div class="card">
+<h3>🌳 Stadt & Leben</h3>
+<p>Informationen zu Kultur, Vereinen und Veranstaltungen.</p>
+</div>
 
-<script>
-function showPopup(text){
-    let popup = document.getElementById("popup");
-    popup.innerText = text;
-    popup.style.opacity = "1";
-    setTimeout(() => popup.style.opacity = "0", 2000);
-}
+<div class="card">
+<h3>🚍 Verkehr</h3>
+<p>Öffentlicher Nahverkehr und Mobilitätsangebote.</p>
+</div>
 
-const glow = document.createElement("div");
-glow.classList.add("cursor-glow");
-document.body.appendChild(glow);
+</div>
 
-document.addEventListener("mousemove", e => {
-    glow.style.left = e.clientX + "px";
-    glow.style.top = e.clientY + "px";
-    
-    const x = (window.innerWidth / 2 - e.clientX) / 50;
-    const y = (window.innerHeight / 2 - e.clientY) / 50;
-    document.querySelector(".hero-title").style.transform = `translate(${x}px,${y}px)`;
-});
-</script>
+<div class="news">
+
+<h2 style="margin-bottom:20px;">Aktuelle Meldungen</h2>
+
+<div class="news-item">
+<strong>Neuer Stadtpark eröffnet</strong><br>
+Der neue Stadtpark im Zentrum wurde offiziell eröffnet.
+</div>
+
+<div class="news-item">
+<strong>Sommerfest 2026</strong><br>
+Das große Stadtfest findet dieses Jahr am 14. Juli statt.
+</div>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 Stadt Königsbrunn | Dies ist eine fiktive Website für ein Roleplay-Projekt.
+</footer>
 
 </body>
 </html>
