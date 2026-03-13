@@ -12,7 +12,6 @@
 :root{
 --primary:#0062ff;
 --secondary:#00e5ff;
---gradient:linear-gradient(135deg,var(--primary),var(--secondary));
 --bg-dark:#05070a;
 --border:rgba(255,255,255,0.06);
 --text-main:#cecece;
@@ -20,15 +19,15 @@
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
+
 html{scroll-behavior:smooth}
+
 body{
 font-family:'Inter',sans-serif;
 background:#05070a;
 color:var(--text-main);
 overflow-x:hidden;
 }
-
-/* LOADER */
 
 #loader{
 position:fixed;
@@ -52,15 +51,13 @@ overflow:hidden;
 .loader-fill{
 height:100%;
 width:0%;
-background:var(--primary);
+background:#0062ff;
 animation:load 2.5s forwards;
 }
 
 @keyframes load{
 to{width:100%}
 }
-
-/* CURSOR GLOW */
 
 .cursor-glow{
 position:fixed;
@@ -71,16 +68,12 @@ pointer-events:none;
 z-index:0;
 }
 
-/* PARTICLES */
-
 #particles{
 position:fixed;
 width:100%;
 height:100%;
 z-index:-1;
 }
-
-/* NAV */
 
 nav{
 display:flex;
@@ -101,14 +94,36 @@ font-size:1.1rem;
 }
 
 .logo span{
-background:var(--gradient);
+background:linear-gradient(120deg,#0062ff,#00e5ff,#0033ff);
+background-size:200% 200%;
+animation:gradientMove 6s infinite;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
 
-.nav-right{display:flex;gap:20px}
+.nav-right{
+display:flex;
+gap:12px;
+}
 
-/* HERO */
+.nav-right a{
+padding:8px 18px;
+border-radius:8px;
+text-decoration:none;
+font-size:0.7rem;
+letter-spacing:1px;
+text-transform:uppercase;
+color:white;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+transition:0.3s;
+}
+
+.nav-right a:hover{
+background:rgba(255,255,255,0.12);
+box-shadow:0 0 20px rgba(0,229,255,0.4);
+}
 
 header{
 height:100vh;
@@ -127,18 +142,45 @@ color:white;
 }
 
 .hero-title b{
-background:var(--gradient);
+background:linear-gradient(120deg,#0062ff,#00e5ff,#0033ff);
+background-size:200% 200%;
+animation:gradientMove 6s infinite;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
 
-.hero-desc{
-max-width:500px;
-margin-top:20px;
-color:#888;
+@keyframes gradientMove{
+0%{background-position:0%}
+50%{background-position:100%}
+100%{background-position:0%}
 }
 
-.btn-group{margin-top:30px;display:flex;gap:12px}
+.hero-desc{
+max-width:520px;
+margin-top:20px;
+color:#888;
+font-size:0.95rem;
+}
+
+.hero-line{
+width:120px;
+height:2px;
+background:linear-gradient(90deg,transparent,#00e5ff,transparent);
+margin-top:30px;
+}
+
+.server-status{
+margin-top:15px;
+font-size:0.75rem;
+color:#00e5ff;
+letter-spacing:1px;
+}
+
+.btn-group{
+margin-top:30px;
+display:flex;
+gap:12px;
+}
 
 .btn{
 padding:14px 30px;
@@ -152,7 +194,9 @@ transition:0.3s;
 }
 
 .btn-primary{
-background:var(--gradient);
+background:linear-gradient(120deg,#0062ff,#00e5ff,#0033ff);
+background-size:200% 200%;
+animation:gradientMove 6s infinite;
 color:white;
 box-shadow:0 10px 20px rgba(0,98,255,0.2);
 }
@@ -162,15 +206,11 @@ box-shadow:0 0 25px rgba(0,229,255,0.6);
 transform:translateY(-3px);
 }
 
-/* CONTAINER */
-
 .container{
 max-width:1100px;
 margin:auto;
 padding:80px 20px;
 }
-
-/* GRID */
 
 .grid{
 display:grid;
@@ -178,24 +218,20 @@ grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 gap:20px;
 }
 
-/* GLASS CARDS */
-
 .card{
 padding:35px;
-border-radius:14px;
-background:rgba(255,255,255,0.03);
+border-radius:16px;
+background:rgba(255,255,255,0.04);
 border:1px solid rgba(255,255,255,0.08);
-backdrop-filter:blur(20px);
-box-shadow:0 20px 40px rgba(0,0,0,0.4);
+backdrop-filter:blur(30px);
+box-shadow:0 10px 40px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.03);
 transition:0.4s;
 }
 
 .card:hover{
-transform:translateY(-6px);
-border-color:var(--primary);
+transform:translateY(-8px) scale(1.02);
+border-color:#00e5ff;
 }
-
-/* TEAM */
 
 .team-title{
 font-family:'Montserrat';
@@ -214,8 +250,9 @@ gap:15px;
 .team-member{
 padding:25px;
 border-radius:10px;
-background:rgba(255,255,255,0.03);
+background:rgba(255,255,255,0.04);
 border:1px solid rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
 }
 
 .badge{
@@ -227,8 +264,6 @@ font-weight:700;
 
 .badge-owner{color:#ff3c3c}
 .badge-lead{color:#00e5ff}
-
-/* REVEAL */
 
 .reveal{
 opacity:0;
@@ -244,8 +279,6 @@ transform:translateY(0);
 .reveal:nth-child(1){transition-delay:0.1s}
 .reveal:nth-child(2){transition-delay:0.2s}
 .reveal:nth-child(3){transition-delay:0.3s}
-
-/* FOOTER */
 
 footer{
 text-align:center;
@@ -280,12 +313,19 @@ border-top:1px solid var(--border);
 
 <header>
 
-<h1 class="hero-title">NEXT-GEN<br><b>ROLEPLAY</b></h1>
+<h1 class="hero-title">KÖNIGSBRUNN<br><b>CITY ROLEPLAY</b></h1>
 
 <p class="hero-desc">
-Eine neue Ära des Roblox-Roleplays beginnt hier.
-Minimalistisch, performant und auf höchstem Niveau.
+Königsbrunn ist ein neues Roblox Roleplay Projekt.
+Die Stadt befindet sich aktuell in Entwicklung.
+Updates und Bewerbungen folgen bald.
 </p>
+
+<div class="hero-line"></div>
+
+<div class="server-status">
+🟡 GAME IN DEVELOPMENT
+</div>
 
 <div class="btn-group">
 <a href="https://discord.gg/QX5xj22dGW" class="btn btn-primary">Discord</a>
@@ -309,7 +349,7 @@ Minimalistisch, performant und auf höchstem Niveau.
 
 <div class="card reveal">
 <h3>VISION</h3>
-<p>Community-Feedback treibt unsere Entwicklung.</p>
+<p>Community-Feedback treibt die Entwicklung der Stadt.</p>
 </div>
 
 </div>
@@ -352,16 +392,12 @@ mrlenny13
 
 <script>
 
-/* LOADER */
-
 window.onload=()=>{
 setTimeout(()=>{
 document.getElementById("loader").style.opacity="0"
 setTimeout(()=>document.getElementById("loader").style.display="none",600)
 },2000)
 }
-
-/* CURSOR GLOW */
 
 const glow=document.createElement("div")
 glow.classList.add("cursor-glow")
@@ -372,15 +408,11 @@ glow.style.left=e.clientX-200+"px"
 glow.style.top=e.clientY-200+"px"
 })
 
-/* PARALLAX HERO */
-
 document.addEventListener("mousemove",e=>{
 const x=(window.innerWidth/2-e.clientX)/40
 const y=(window.innerHeight/2-e.clientY)/40
 document.querySelector(".hero-title").style.transform=`translate(${x}px,${y}px)`
 })
-
-/* SCROLL REVEAL */
 
 const observer=new IntersectionObserver(entries=>{
 entries.forEach(entry=>{
@@ -391,8 +423,6 @@ entry.target.classList.add("active")
 })
 
 document.querySelectorAll(".reveal").forEach(el=>observer.observe(el))
-
-/* PARTICLES */
 
 particlesJS("particles",{
 particles:{
