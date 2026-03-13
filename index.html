@@ -4,165 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Königsbrunn | District 50-KM²</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@200;300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #00ff88;
-            --danger: #ff4757;
-            --bg: #030405;
-            --glass-bg: rgba(255, 255, 255, 0.015);
-            --glass-border: rgba(255, 255, 255, 0.07);
+            --primary: #ed2939; /* Das gewünschte aggressive Rot */
+            --primary-glow: rgba(237, 41, 57, 0.4);
+            --bg: #050506;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
             --font-main: 'Inter', sans-serif;
-            --font-tech: 'Syncopate', sans-serif;
+            --font-gaming: 'Orbitron', sans-serif;
         }
 
         * { cursor: none; margin: 0; padding: 0; box-sizing: border-box; }
+        
         body { 
             font-family: var(--font-main); 
             background: var(--bg); 
             color: #fff; 
             overflow-x: hidden;
-            letter-spacing: 0.5px;
+            line-height: 1.6;
         }
 
+        /* --- BACKGROUND --- */
         #city-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(3,4,5,0.85), var(--bg)), 
+            background: linear-gradient(to bottom, rgba(5,5,6,0.8), var(--bg)), 
                         url('https://images.unsplash.com/photo-1599946347341-653932174ad9?q=80&w=2000');
-            background-size: cover; background-position: center; z-index: -2; opacity: 0.35;
+            background-size: cover; background-position: center; z-index: -2; opacity: 0.4;
         }
 
         /* --- CUSTOM CURSOR --- */
-        #cursor { width: 5px; height: 5px; background: var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 12000; box-shadow: 0 0 10px var(--primary); }
-        #cursor-follower { width: 35px; height: 35px; border: 0.5px solid var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 11999; transition: transform 0.15s ease-out; opacity: 0.4; }
+        #cursor { width: 6px; height: 6px; background: var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 12000; box-shadow: 0 0 15px var(--primary); }
+        #cursor-follower { width: 40px; height: 40px; border: 1px solid var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 11999; transition: transform 0.1s ease-out; opacity: 0.3; }
 
         /* --- NAVIGATION --- */
         nav {
-            position: fixed; top: 0; width: 100%; padding: 30px 60px;
+            position: fixed; top: 0; width: 100%; padding: 25px 5%;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; backdrop-filter: blur(20px); border-bottom: 0.5px solid var(--glass-border);
+            z-index: 1000; backdrop-filter: blur(15px); border-bottom: 1px solid var(--glass-border);
         }
-        .logo { font-family: var(--font-tech); font-size: 0.9rem; letter-spacing: 6px; font-weight: 700; color: #fff; }
+        .logo { font-family: var(--font-gaming); font-size: 1.2rem; font-weight: 900; letter-spacing: 2px; }
+        .logo span { color: var(--primary); }
 
-        /* --- HERO --- */
-        header { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        /* --- HERO SECTION --- */
+        header { 
+            height: 100vh; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center; 
+            padding: 0 20px;
+        }
         
         .dev-badge {
-            font-family: var(--font-tech);
-            font-size: 0.5rem;
-            color: var(--primary);
+            font-family: var(--font-gaming);
+            font-size: 0.7rem; color: var(--primary);
             border: 1px solid var(--primary);
-            padding: 5px 12px;
-            border-radius: 2px;
-            letter-spacing: 4px;
-            margin-bottom: 15px;
-            background: rgba(0, 255, 136, 0.05);
+            padding: 6px 16px; border-radius: 4px;
+            letter-spacing: 3px; margin-bottom: 20px;
+            background: rgba(237, 41, 57, 0.05);
             text-transform: uppercase;
         }
 
         header h1 { 
-            font-family: var(--font-tech); 
-            font-size: clamp(1.5rem, 6vw, 4.2rem); 
+            font-family: var(--font-gaming); 
+            font-size: clamp(2.5rem, 8vw, 5.5rem); 
             text-transform: uppercase; 
-            font-weight: 700; 
+            font-weight: 900; 
             letter-spacing: -2px; 
-            margin-bottom: 30px;
+            margin-bottom: 10px;
+            line-height: 1;
         }
         
-        .hero-sub { color: #fff; font-family: var(--font-tech); font-size: 0.6rem; letter-spacing: 8px; opacity: 0.5; margin-bottom: 10px; }
+        .hero-sub { 
+            color: #fff; font-family: var(--font-gaming); 
+            font-size: 0.8rem; letter-spacing: 6px; opacity: 0.6; 
+            margin-bottom: 40px; text-transform: uppercase;
+        }
 
-        /* --- RADAR --- */
-        .radar-container {
-            grid-column: span 8; height: 500px; background: rgba(0,0,0,0.3);
-            border-radius: 25px; border: 0.5px solid var(--glass-border); position: relative;
-            overflow: hidden; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);
+        /* --- BUTTONS --- */
+        .btn-container { display: flex; gap: 20px; }
+        .cta-btn {
+            background: transparent; color: #fff; padding: 16px 40px;
+            border: 1px solid var(--glass-border); border-radius: 4px;
+            font-family: var(--font-gaming); font-size: 0.7rem; letter-spacing: 2px;
+            transition: 0.3s; cursor: pointer; text-decoration: none;
+            text-transform: uppercase; font-weight: 700;
         }
-        .radar {
-            width: 350px; height: 350px; border: 1px solid rgba(0, 255, 136, 0.08); border-radius: 50%;
-            position: relative; background: radial-gradient(circle, rgba(0, 255, 136, 0.02) 0%, transparent 70%);
-        }
-        .radar::after {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: conic-gradient(from 0deg, var(--primary) 0%, transparent 25%);
-            border-radius: 50%; animation: rotate-radar 4s linear infinite;
-        }
-        @keyframes rotate-radar { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        
-        .ping {
-            position: absolute; width: 4px; height: 4px; background: var(--primary); border-radius: 50%;
-            box-shadow: 0 0 10px var(--primary); opacity: 0; animation: ping-burst 3s forwards;
-        }
-        @keyframes ping-burst { 
-            0% { opacity: 0; transform: scale(0.5); } 20% { opacity: 1; } 100% { opacity: 0; transform: scale(2.5); }
-        }
+        .cta-btn:hover { border-color: var(--primary); background: rgba(237, 41, 57, 0.1); transform: translateY(-3px); }
+        .btn-primary { background: var(--primary); border-color: var(--primary); box-shadow: 0 0 20px var(--primary-glow); }
+        .btn-primary:hover { background: #ff3d4d; box-shadow: 0 0 30px var(--primary); }
 
         /* --- GRID & CARDS --- */
         .city-grid {
-            display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px;
-            max-width: 1300px; margin: -60px auto 100px; padding: 0 20px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
+            max-width: 1200px; margin: -50px auto 100px; padding: 0 20px;
         }
         .feature-box {
-            grid-column: span 4; background: var(--glass-bg);
-            border: 0.5px solid var(--glass-border); border-radius: 18px; padding: 30px;
-            backdrop-filter: blur(25px); transition: 0.5s ease;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border); border-radius: 12px; padding: 40px;
+            backdrop-filter: blur(20px); transition: 0.4s ease;
         }
-        .feature-box:hover { border-color: var(--primary); background: rgba(255,255,255,0.03); transform: translateY(-5px); }
-        .feature-box h3 { font-family: var(--font-tech); font-size: 0.65rem; color: var(--primary); margin-bottom: 15px; letter-spacing: 2px; }
-        .feature-box p { font-size: 0.8rem; font-weight: 300; color: #aaa; line-height: 1.7; }
-
-        /* --- BUTTONS --- */
-        .cta-btn {
-            background: transparent; color: #fff; padding: 14px 35px;
-            border: 0.5px solid var(--glass-border); border-radius: 4px;
-            font-family: var(--font-tech); font-size: 0.55rem; letter-spacing: 3px;
-            transition: 0.4s; cursor: pointer; text-decoration: none;
-        }
-        .cta-btn:hover { border-color: var(--primary); background: rgba(0, 255, 136, 0.05); }
-        .btn-locked { border-color: var(--danger); color: var(--danger); }
-        .btn-locked:hover { background: var(--danger); color: #fff; }
+        .feature-box:hover { border-color: var(--primary); background: rgba(255,255,255,0.05); transform: translateY(-10px); }
+        .feature-box h3 { font-family: var(--font-gaming); font-size: 0.8rem; color: var(--primary); margin-bottom: 20px; letter-spacing: 2px; }
+        .feature-box p { font-size: 0.95rem; font-weight: 300; color: #ccc; }
 
         /* --- TEAM --- */
         .team-container { max-width: 900px; margin: 120px auto; padding: 0 40px; }
+        .team-header { font-family: var(--font-gaming); font-size: 0.8rem; margin-bottom: 40px; opacity: 0.6; letter-spacing: 4px; text-align: center; }
+        
         .team-card { 
-            display: flex; align-items: center; padding: 22px 20px; 
-            border-bottom: 0.5px solid var(--glass-border); 
+            display: flex; align-items: center; padding: 25px; 
+            background: var(--glass-bg); border-radius: 8px; margin-bottom: 15px;
+            border: 1px solid var(--glass-border);
             opacity: 0; transform: translateX(-20px);
-            transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: 0.6s ease-out;
         }
         .reveal.active .team-card { opacity: 1; transform: translateX(0); }
-        .team-card:hover { background: rgba(255, 255, 255, 0.03); border-color: var(--primary); padding-left: 35px; }
-        .team-rank { font-family: var(--font-tech); font-size: 0.5rem; margin-left: auto; letter-spacing: 2px; text-align: right; }
-        .status-light { width: 6px; height: 6px; border-radius: 50%; margin-right: 20px; box-shadow: 0 0 12px currentColor; animation: pulse 2s infinite; }
+        .team-card:hover { border-color: var(--primary); background: rgba(255, 255, 255, 0.05); padding-left: 35px; }
         
-        @keyframes pulse { 0% { opacity: 0.4; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } 100% { opacity: 0.4; transform: scale(0.9); } }
+        .team-rank { font-family: var(--font-gaming); font-size: 0.6rem; margin-left: auto; letter-spacing: 1px; color: var(--primary); }
+        .status-light { width: 8px; height: 8px; border-radius: 50%; margin-right: 20px; box-shadow: 0 0 10px currentColor; animation: pulse 2s infinite; }
+        
+        @keyframes pulse { 0% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } 100% { opacity: 0.5; transform: scale(1); } }
 
-        /* --- MODERN DENIED OVERLAY --- */
+        /* --- OVERLAY --- */
         #denied-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(255, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.98) 100%);
-            display: none; z-index: 11000; 
-            justify-content: center; align-items: center; 
-            backdrop-filter: blur(15px) saturate(0.2);
+            background: rgba(5, 5, 6, 0.95);
+            display: none; z-index: 11000; justify-content: center; align-items: center; 
+            backdrop-filter: blur(20px);
         }
-        .denied-content {
-            text-align: center; border: 1px solid var(--danger);
-            padding: 60px; background: rgba(10, 0, 0, 0.8);
-            box-shadow: 0 0 100px rgba(255, 71, 87, 0.15);
-            position: relative;
-        }
-        .glitch-text {
-            font-family: var(--font-tech); font-size: 3rem; color: var(--danger);
-            letter-spacing: 12px; text-shadow: 3px 3px #000;
-            animation: glitch 0.15s infinite;
-        }
-        @keyframes glitch {
-            0% { transform: translate(2px, -2px); opacity: 0.8; }
-            50% { transform: translate(-2px, 2px); opacity: 1; }
-            100% { transform: translate(1px, 1px); opacity: 0.9; }
-        }
+        .denied-content { text-align: center; border: 1px solid var(--primary); padding: 60px; background: #000; box-shadow: 0 0 50px rgba(237, 41, 57, 0.2); }
+        .glitch-text { font-family: var(--font-gaming); font-size: 2.5rem; color: var(--primary); letter-spacing: 8px; }
 
-        footer { padding: 80px; text-align: center; opacity: 0.3; font-size: 0.55rem; font-family: var(--font-tech); letter-spacing: 4px; }
-        .reveal { opacity: 0; transform: translateY(40px); transition: 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        footer { padding: 80px; text-align: center; opacity: 0.3; font-size: 0.7rem; font-family: var(--font-gaming); letter-spacing: 3px; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
@@ -174,25 +149,24 @@
 
 <div id="denied-overlay" onclick="this.style.display='none'">
     <div class="denied-content">
-        <div style="font-family: var(--font-tech); font-size: 0.6rem; color: var(--danger); margin-bottom: 15px; letter-spacing: 5px;">SECURITY BREACH // FIREWALL ACTIVE</div>
+        <div style="font-family: var(--font-gaming); font-size: 0.7rem; color: var(--primary); margin-bottom: 15px; letter-spacing: 5px;">SYSTEM ERROR // ACCESS RESTRICTED</div>
         <h1 class="glitch-text">ACCESS DENIED</h1>
-        <div style="width: 50px; height: 2px; background: var(--danger); margin: 30px auto; opacity: 0.5;"></div>
-        <p style="letter-spacing: 4px; font-size: 0.6rem; color: #fff; opacity: 0.6; text-transform: uppercase;">Unbefugter Zugriff auf Stadt-Zentralrechner verhindert.</p>
+        <p style="letter-spacing: 3px; font-size: 0.7rem; color: #fff; opacity: 0.6; margin-top: 20px; text-transform: uppercase;">Portal derzeit nur für autorisierte Einheiten.</p>
     </div>
 </div>
 
 <nav>
-    <div class="logo">KÖNIGSBRUNN</div>
-    <div style="font-size: 0.5rem; font-family: var(--font-tech); opacity: 0.5; letter-spacing: 3px;">INTELLIGENT DISTRICT MGMT</div>
+    <div class="logo">KÖNIGSBRUNN<span>.VISION</span></div>
+    <div id="clock" style="font-size: 0.8rem; font-family: var(--font-gaming); letter-spacing: 2px;">00:00:00</div>
 </nav>
 
 <header>
-    <div class="dev-badge reveal">IN ENTWICKLUNG // DEV-PHASE</div>
-    <div class="hero-sub reveal">DATENSATZ NR. 2026-KB</div>
-    <h1 class="reveal">DISTRICT 50-KM<span style="color: var(--primary); font-weight: 700;">²</span></h1>
-    <div style="display: flex; gap: 15px; margin-top: 20px;">
-        <button class="cta-btn btn-locked" onclick="showDenied()">STADTPORTAL</button>
-        <a href="https://discord.gg/QX5xj22dGW" class="cta-btn">COM-LINK</a>
+    <div class="dev-badge reveal">ALPHA PHASE // 2026</div>
+    <h1 class="reveal">DISTRICT 50-KM<span style="color: var(--primary);">²</span></h1>
+    <div class="hero-sub reveal">Das nächste Level des Roleplays</div>
+    <div class="btn-container reveal">
+        <button class="cta-btn btn-primary" onclick="showDenied()">STADTPORTAL</button>
+        <a href="https://discord.gg/QX5xj22dGW" class="cta-btn">DISCORD</a>
     </div>
 </header>
 
@@ -202,58 +176,50 @@
         <p>Eine moderne Infrastruktur bildet das Rückgrat von Königsbrunn. Realistisches städtisches Leben auf höchstem Niveau.</p>
     </div>
 
-    <div class="radar-container reveal" style="grid-row: span 2;">
-        <div class="radar" id="radar"></div>
-        <div style="position: absolute; top: 25px; left: 25px; font-family: var(--font-tech); font-size: 0.5rem; line-height: 2;">
-            <span style="color: var(--primary);">● AKTIVER SCAN</span><br>
-            <span style="opacity: 0.4;">BEREICH: KÖNIGSBRUNN ZENTRUM</span><br>
-            <span id="obj-count" style="opacity: 0.4;">ENTITÄTEN: 0</span>
-        </div>
-    </div>
-
     <div class="feature-box reveal">
         <h3>02 // IMMERSION</h3>
-        <p>Jedes Detail der Karte wurde für maximale Rollenspiel-Tiefe optimiert. Erlebe eine Stadt, die atmet.</p>
+        <p>Jedes Detail der Karte wurde für maximale Rollenspiel-Tiefe optimiert. Erlebe eine Stadt, die atmet und auf deine Taten reagiert.</p>
     </div>
 
     <div class="feature-box reveal">
-        <h3>03 // RECHTSSTAAT</h3>
-        <p>Ein faires System für Fraktionen und Bürger. Deine Taten haben Konsequenzen in einer dynamischen Welt.</p>
-    </div>
-
-    <div class="feature-box reveal" style="grid-column: span 4;">
-        <h3>04 // STATUSMELDUNG</h3>
-        <p>Die städtischen Systeme befinden sich in der Endphase. Alle Sektoren laufen derzeit im gesicherten Modus.</p>
+        <h3>03 // FRAKTIONEN</h3>
+        <p>Egal ob LSPD, Medic oder Unterwelt – ein faires System sorgt für spannende Interaktionen und echtes Teamplay.</p>
     </div>
 </div>
 
 <div class="team-container reveal">
-    <h2 style="font-family: var(--font-tech); font-size: 0.65rem; margin-bottom: 30px; opacity: 0.5; letter-spacing: 3px;">AUTORISIERTE ADMINISTRATION</h2>
+    <h2 class="team-header">AUTORISIERTE ADMINISTRATION</h2>
     <div id="team-list"></div>
 </div>
 
-<div style="height: 200px;"></div>
-
 <footer>
-    EST. 2026 // KÖNIGSBRUNN NETWORK // DISTRICT 50-KM² // CRYPTOGRAPHICALLY SECURED
+    EST. 2026 // KÖNIGSBRUNN NETWORK // DISTRICT 50-KM² // SECURED BY VISION-CORE
 </footer>
 
 <script>
+    // Cursor Script
     const cursor = document.getElementById("cursor");
     const follower = document.getElementById("cursor-follower");
     document.addEventListener("mousemove", (e) => {
         cursor.style.left = e.clientX + "px";
         cursor.style.top = e.clientY + "px";
-        follower.style.left = e.clientX - 17 + "px";
-        follower.style.top = e.clientY - 17 + "px";
+        follower.style.left = e.clientX - 20 + "px";
+        follower.style.top = e.clientY - 20 + "px";
     });
 
+    // Clock Script
+    setInterval(() => {
+        document.getElementById('clock').innerText = new Date().toLocaleTimeString();
+    }, 1000);
+
+    // Denied Overlay
     function showDenied() {
         const overlay = document.getElementById('denied-overlay');
         overlay.style.display = 'flex';
-        setTimeout(() => { overlay.style.display = 'none'; }, 2500);
+        setTimeout(() => { overlay.style.display = 'none'; }, 3000);
     }
 
+    // Reveal Animation on Scroll
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) entry.target.classList.add("active");
@@ -261,30 +227,10 @@
     }, { threshold: 0.1 });
     document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
-    // --- RADAR ---
-    const radar = document.getElementById('radar');
-    const objCount = document.getElementById('obj-count');
-    
-    function createPing() {
-        const ping = document.createElement('div');
-        ping.className = 'ping';
-        const x = Math.random() * 80 + 10;
-        const y = Math.random() * 80 + 10;
-        ping.style.left = x + '%';
-        ping.style.top = y + '%';
-        radar.appendChild(ping);
-        setTimeout(() => ping.remove(), 3000);
-    }
-
-    setInterval(createPing, 1200);
-    setInterval(() => {
-        objCount.innerText = "ENTITÄTEN: " + (Math.floor(Math.random() * 20) + 12);
-    }, 2500);
-
-    // --- TEAM ---
+    // Team List Generation
     const team = [
-        { name: "lucas.aus.at", role: "TOP-MANAGEMENT", color: "#00ff88" },
-        { name: "joge2286", role: "TOP-MANAGEMENT", color: "#00ff88" },
+        { name: "lucas.aus.at", role: "TOP-MANAGEMENT", color: "#ed2939" },
+        { name: "joge2286", role: "TOP-MANAGEMENT", color: "#ed2939" },
         { name: "benschi1503", role: "LEAD DEVELOPMENT", color: "#00d1ff" },
         { name: "mrlenny13", role: "GAME DEV", color: "#ffd100" }
     ];
@@ -293,11 +239,11 @@
     team.forEach((m, index) => {
         const card = document.createElement('div');
         card.className = 'team-card';
-        card.style.transitionDelay = (index * 0.15) + "s"; 
+        card.style.transitionDelay = (index * 0.1) + "s"; 
         card.innerHTML = `
             <div class="status-light" style="color: ${m.color}; background: ${m.color};"></div>
-            <div style="font-size: 0.85rem; font-weight: 300; letter-spacing: 1px;">${m.name}</div>
-            <div class="team-rank" style="color: ${m.color};">${m.role}</div>
+            <div style="font-size: 0.9rem; font-weight: 400; font-family: var(--font-gaming); letter-spacing: 1px;">${m.name}</div>
+            <div class="team-rank">${m.role}</div>
         `;
         teamList.appendChild(card);
     });
