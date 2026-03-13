@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KÖNIGSBRUNN | OFFICIAL</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 
 <style>
 
@@ -20,8 +20,6 @@
 
 *{margin:0;padding:0;box-sizing:border-box}
 
-html{scroll-behavior:smooth}
-
 body{
 font-family:'Inter',sans-serif;
 background:#05070a;
@@ -29,50 +27,21 @@ color:var(--text-main);
 overflow-x:hidden;
 }
 
-#loader{
+body::before{
+content:"";
 position:fixed;
 inset:0;
-background:#05070a;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-z-index:50000;
-}
-
-.loader-bar{
-width:220px;
-height:3px;
-background:rgba(255,255,255,0.1);
-margin-top:20px;
-overflow:hidden;
-}
-
-.loader-fill{
-height:100%;
-width:0%;
-background:#0062ff;
-animation:load 2.5s forwards;
-}
-
-@keyframes load{
-to{width:100%}
-}
-
-.cursor-glow{
-position:fixed;
-width:400px;
-height:400px;
-background:radial-gradient(circle,rgba(0,229,255,0.15),transparent 60%);
-pointer-events:none;
-z-index:0;
-}
-
-#particles{
-position:fixed;
-width:100%;
-height:100%;
+background-image:
+linear-gradient(rgba(0,255,255,0.05) 1px,transparent 1px),
+linear-gradient(90deg,rgba(0,255,255,0.05) 1px,transparent 1px);
+background-size:40px 40px;
+animation:gridMove 15s linear infinite;
 z-index:-1;
+}
+
+@keyframes gridMove{
+0%{transform:translateY(0)}
+100%{transform:translateY(40px)}
 }
 
 nav{
@@ -88,7 +57,7 @@ z-index:1000;
 }
 
 .logo{
-font-family:'Montserrat';
+font-family:'Orbitron';
 font-weight:900;
 font-size:1.1rem;
 }
@@ -135,10 +104,14 @@ text-align:center;
 }
 
 .hero-title{
-font-family:'Montserrat';
-font-size:clamp(2.5rem,8vw,5.5rem);
+font-family:'Orbitron';
+font-size:clamp(3rem,9vw,6rem);
 font-weight:900;
+letter-spacing:3px;
 color:white;
+text-shadow:
+0 0 10px rgba(0,229,255,0.6),
+0 0 30px rgba(0,229,255,0.3);
 }
 
 .hero-title b{
@@ -147,12 +120,6 @@ background-size:200% 200%;
 animation:gradientMove 6s infinite;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-}
-
-@keyframes gradientMove{
-0%{background-position:0%}
-50%{background-position:100%}
-100%{background-position:0%}
 }
 
 .hero-desc{
@@ -180,30 +147,35 @@ letter-spacing:1px;
 margin-top:30px;
 display:flex;
 gap:12px;
+flex-wrap:wrap;
+justify-content:center;
 }
 
 .btn{
 padding:14px 30px;
-border-radius:6px;
+border-radius:8px;
 font-weight:700;
 font-size:0.75rem;
 text-decoration:none;
 text-transform:uppercase;
-letter-spacing:1px;
+letter-spacing:2px;
 transition:0.3s;
-}
-
-.btn-primary{
-background:linear-gradient(120deg,#0062ff,#00e5ff,#0033ff);
-background-size:200% 200%;
-animation:gradientMove 6s infinite;
 color:white;
-box-shadow:0 10px 20px rgba(0,98,255,0.2);
+border:1px solid rgba(0,229,255,0.4);
+background:rgba(0,229,255,0.08);
+backdrop-filter:blur(10px);
+cursor:pointer;
 }
 
-.btn-primary:hover{
-box-shadow:0 0 25px rgba(0,229,255,0.6);
+.btn:hover{
+background:rgba(0,229,255,0.2);
+box-shadow:0 0 20px #00e5ff;
 transform:translateY(-3px);
+}
+
+.locked{
+border-color:#ff2a2a;
+opacity:0.7;
 }
 
 .container{
@@ -224,61 +196,55 @@ border-radius:16px;
 background:rgba(255,255,255,0.04);
 border:1px solid rgba(255,255,255,0.08);
 backdrop-filter:blur(30px);
-box-shadow:0 10px 40px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.03);
 transition:0.4s;
+transform-style:preserve-3d;
 }
 
 .card:hover{
-transform:translateY(-8px) scale(1.02);
-border-color:#00e5ff;
+transform:rotateX(6deg) rotateY(-6deg) scale(1.05);
+box-shadow:0 20px 60px rgba(0,229,255,0.25);
 }
 
-.team-title{
-font-family:'Montserrat';
-font-size:1.8rem;
-text-align:center;
-margin-bottom:50px;
-color:white;
-}
-
-.team-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
-}
-
-.team-member{
-padding:25px;
+.map-card{
+width:320px;
+height:200px;
+margin:100px auto;
 border-radius:10px;
-background:rgba(255,255,255,0.04);
-border:1px solid rgba(255,255,255,0.08);
-backdrop-filter:blur(20px);
+overflow:hidden;
+position:relative;
+cursor:pointer;
 }
 
-.badge{
-display:block;
-margin-top:10px;
-font-size:0.65rem;
-font-weight:700;
+.map-card iframe{
+width:100%;
+height:100%;
+border:0;
+filter:blur(12px);
 }
 
-.badge-owner{color:#ff3c3c}
-.badge-lead{color:#00e5ff}
+.map-lock{
+position:absolute;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,0.7);
+font-family:'Orbitron';
+letter-spacing:2px;
+}
 
-.reveal{
+.popup{
+position:fixed;
+bottom:40px;
+left:50%;
+transform:translateX(-50%);
+background:#ff2a2a;
+color:white;
+padding:12px 22px;
+border-radius:6px;
 opacity:0;
-transform:translateY(20px);
-transition:0.8s;
+transition:0.4s;
 }
-
-.reveal.active{
-opacity:1;
-transform:translateY(0);
-}
-
-.reveal:nth-child(1){transition-delay:0.1s}
-.reveal:nth-child(2){transition-delay:0.2s}
-.reveal:nth-child(3){transition-delay:0.3s}
 
 footer{
 text-align:center;
@@ -293,14 +259,7 @@ border-top:1px solid var(--border);
 
 <body>
 
-<div id="loader">
-<h2 style="color:white;font-family:Montserrat">INITIALIZING SYSTEM</h2>
-<div class="loader-bar">
-<div class="loader-fill"></div>
-</div>
-</div>
-
-<div id="particles"></div>
+<div id="popup" class="popup"></div>
 
 <nav>
 <div class="logo">KÖNIGS<span>BRUNN</span></div>
@@ -328,7 +287,19 @@ Updates und Bewerbungen folgen bald.
 </div>
 
 <div class="btn-group">
-<a href="https://discord.gg/QX5xj22dGW" class="btn btn-primary">Discord</a>
+
+<a href="https://discord.gg/QX5xj22dGW" class="btn">
+DISCORD
+</a>
+
+<button class="btn locked" onclick="showPopup('Game is currently under development')">
+GAME
+</button>
+
+<button class="btn locked" onclick="showPopup('Applications are currently closed')">
+APPLICATION
+</button>
+
 </div>
 
 </header>
@@ -337,50 +308,54 @@ Updates und Bewerbungen folgen bald.
 
 <div class="grid">
 
-<div class="card reveal">
+<div class="card">
 <h3>ECONOMY</h3>
 <p>Ein realistisches und faires Wirtschaftssystem.</p>
 </div>
 
-<div class="card reveal">
+<div class="card">
 <h3>ENGINE</h3>
 <p>Optimierter Code für maximale Stabilität.</p>
 </div>
 
-<div class="card reveal">
-<h3>VISION</h3>
-<p>Community-Feedback treibt die Entwicklung der Stadt.</p>
+<div class="card">
+<h3>COMMUNITY</h3>
+<p><span id="discord-count">Loading</span> members online.</p>
 </div>
 
+</div>
+
+<div class="map-card" onclick="unlockMap()">
+<div class="map-lock" id="maplock">ENCRYPTED MAP DATA</div>
+<iframe id="map" src="https://www.google.com/maps?q=Los%20Angeles&output=embed"></iframe>
 </div>
 
 <div style="margin-top:120px" id="staff">
 
-<h2 class="team-title reveal">PROJECT STAFF</h2>
+<h2 style="font-family:Orbitron;font-size:2rem;text-align:center;margin-bottom:50px;color:white">
+PROJECT STAFF
+</h2>
 
-<div class="team-grid">
+<div class="grid">
 
-<div class="team-member reveal">
+<div class="card">
 lucas.aus.at
-<span class="badge badge-owner">Project Owner</span>
 </div>
 
-<div class="team-member reveal">
+<div class="card">
 joge2286
-<span class="badge badge-owner">Project Owner</span>
 </div>
 
-<div class="team-member reveal">
+<div class="card">
 benschi1503
-<span class="badge badge-lead">Lead Developer</span>
 </div>
 
-<div class="team-member reveal">
+<div class="card">
 mrlenny13
-<span class="badge badge-lead">Developer</span>
 </div>
 
 </div>
+
 </div>
 </div>
 
@@ -388,50 +363,31 @@ mrlenny13
 © 2026 KÖNIGSBRUNN — ALL RIGHTS RESERVED
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
 <script>
 
-window.onload=()=>{
+function showPopup(text){
+
+let popup=document.getElementById("popup")
+popup.innerText=text
+popup.style.opacity="1"
+
 setTimeout(()=>{
-document.getElementById("loader").style.opacity="0"
-setTimeout(()=>document.getElementById("loader").style.display="none",600)
+popup.style.opacity="0"
 },2000)
+
 }
 
-const glow=document.createElement("div")
-glow.classList.add("cursor-glow")
-document.body.appendChild(glow)
+function unlockMap(){
 
-document.addEventListener("mousemove",e=>{
-glow.style.left=e.clientX-200+"px"
-glow.style.top=e.clientY-200+"px"
-})
+document.getElementById("map").style.filter="blur(0)"
+document.getElementById("maplock").style.display="none"
 
-document.addEventListener("mousemove",e=>{
-const x=(window.innerWidth/2-e.clientX)/40
-const y=(window.innerHeight/2-e.clientY)/40
-document.querySelector(".hero-title").style.transform=`translate(${x}px,${y}px)`
-})
-
-const observer=new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-entry.target.classList.add("active")
 }
-})
-})
 
-document.querySelectorAll(".reveal").forEach(el=>observer.observe(el))
-
-particlesJS("particles",{
-particles:{
-number:{value:70},
-size:{value:3},
-move:{speed:1},
-line_linked:{enable:true},
-color:{value:"#00e5ff"}
-}
+fetch("https://discord.com/api/guilds/1295464701202866207/widget.json")
+.then(res=>res.json())
+.then(data=>{
+document.getElementById("discord-count").innerText=data.presence_count
 })
 
 </script>
