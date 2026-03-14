@@ -61,6 +61,7 @@ nav {
 .logo { font-size: 1.2rem; font-weight: 800; letter-spacing: 2px; }
 .nav-links { display: flex; gap: 30px; }
 .nav-links a { text-decoration: none; color: var(--text-dim); font-size: 0.9rem; font-weight: 500; transition: color 0.3s, transform 0.2s; }
+.nav-links a.active { color: var(--accent); font-weight: 700; }
 .nav-links a:hover { color: var(--accent); transform: scale(1.05); }
 
 /* Hero Section */
@@ -79,7 +80,7 @@ header {
 header h1 { font-size: 3.5rem; margin-bottom: 15px; }
 header p { max-width: 700px; color: var(--text-dim); margin-bottom: 35px; }
 
-/* Header Particle Background */
+/* Particles Canvas */
 #particles {
     position: absolute;
     top:0; left:0; width:100%; height:100%;
@@ -112,7 +113,7 @@ header p { max-width: 700px; color: var(--text-dim); margin-bottom: 35px; }
     color: var(--accent);
     background: transparent;
 }
-.btn-outline:hover { background: rgba(26,86,179,0.1); transform: scale(1.05); }
+.btn-outline:hover { background: rgba(26,86,179,0.15); transform: scale(1.08); box-shadow: 0 0 15px var(--accent); }
 
 /* Main Content */
 .container { max-width: 1100px; margin: auto; padding: 100px 20px; }
@@ -134,7 +135,7 @@ header p { max-width: 700px; color: var(--text-dim); margin-bottom: 35px; }
 .card h3 { color: var(--accent); margin-bottom: 15px; font-size: 1.3rem; }
 .card p { color: var(--text-dim); font-size: 0.95rem; }
 
-/* Information List */
+/* Info Blocks */
 .info-block { margin-top: 100px; background: var(--card-bg); border: 1px solid var(--border-color); padding: 40px; opacity:0; transform: translateY(50px); transition: 0.6s ease-out; }
 .info-block.show { opacity:1; transform: translateY(0); }
 .info-list { list-style: none; margin-top: 20px; }
@@ -157,7 +158,7 @@ footer p { font-size: 0.8rem; color: #484f58; }
 <nav>
     <div class="logo led-text">KÖNIGSBRUNN INTERFACE</div>
     <div class="nav-links">
-        <a href="#stadt">System-Informationen</a>
+        <a href="#stadt" class="active">System-Informationen</a>
         <a href="#status">Projekt-Status</a>
         <a href="https://discord.gg/qg4gYuxUgx">Discord-Server</a>
     </div>
@@ -195,22 +196,10 @@ footer p { font-size: 0.8rem; color: #484f58; }
     <div class="info-block" id="status">
         <h3>PROJEKT-SPEZIFIKATIONEN</h3>
         <ul class="info-list">
-            <li>
-                <strong>Entwicklungsstadium: Alpha-Phase</strong>
-                Die Architektur der Kern-Systeme wird derzeit implementiert. Ein öffentlicher Zugriff auf die Spielinstanz ist momentan nicht vorgesehen.
-            </li>
-            <li>
-                <strong>Bewerbungssystem: Inaktiv</strong>
-                Das automatisierte Bewerbungsverfahren für Fraktionsleitungen, Support-Positionen und Entwickler-Rollen ist bis zur Erreichung des Meilensteins 'Beta' deaktiviert.
-            </li>
-            <li>
-                <strong>Anforderungen für zukünftige Mitwirkung</strong>
-                Vorausgesetzt wird ein Mindestalter von 16 Jahren, eine fehlerfreie Ausdrucksweise in deutscher Sprache sowie eine dokumentierte Historie innerhalb vergleichbarer Projekte.
-            </li>
-            <li>
-                <strong>Technische Basis</strong>
-                Optimierung der Skripte auf Luau-Basis zur Gewährleistung maximaler Performance bei hoher Spielerlast.
-            </li>
+            <li><strong>Entwicklungsstadium: Alpha-Phase</strong> Die Architektur der Kern-Systeme wird derzeit implementiert. Ein öffentlicher Zugriff auf die Spielinstanz ist momentan nicht vorgesehen.</li>
+            <li><strong>Bewerbungssystem: Inaktiv</strong> Das automatisierte Bewerbungsverfahren für Fraktionsleitungen, Support-Positionen und Entwickler-Rollen ist bis zur Erreichung des Meilensteins 'Beta' deaktiviert.</li>
+            <li><strong>Anforderungen für zukünftige Mitwirkung</strong> Mindestalter 16 Jahre, fehlerfreie deutsche Ausdrucksweise, dokumentierte Historie innerhalb vergleichbarer Projekte.</li>
+            <li><strong>Technische Basis</strong> Optimierung der Skripte auf Luau-Basis zur Gewährleistung maximaler Performance bei hoher Spielerlast.</li>
         </ul>
     </div>
 
@@ -224,19 +213,16 @@ footer p { font-size: 0.8rem; color: #484f58; }
 </div>
 
 <footer>
-    <p>&copy; 2026 KÖNIGSBRUNN CITY ROLEPLAY. DIES IST EIN FIKTIVES PROJEKT ZU UNTERHALTUNGSZWECKEN. KEINE VERBINDUNG ZUR ROBLOX CORPORATION ODER REALEN BEHÖRDEN.</p>
+    <p>&copy; 2026 KÖNIGSBRUNN CITY ROLEPLAY. FIKTIVES PROJEKT ZU UNTERHALTUNGSZWECKEN. KEINE VERBINDUNG ZUR ROBLOX CORPORATION ODER REALEN BEHÖRDEN.</p>
 </footer>
 
 <script>
 // Scroll Animation für Cards & Info-Blocks
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-        if(entry.isIntersecting){
-            entry.target.classList.add('show');
-        }
+        if(entry.isIntersecting){ entry.target.classList.add('show'); }
     });
 }, { threshold: 0.2 });
-
 document.querySelectorAll('.card, .info-block').forEach(el => observer.observe(el));
 
 // Partikel-Hintergrund
@@ -244,7 +230,6 @@ const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight/2;
-
 const particlesArray = [];
 const colors = ['#00d4ff','#1a56b3','#00ffff'];
 
@@ -258,8 +243,7 @@ class Particle {
         this.color = colors[Math.floor(Math.random()*colors.length)];
     }
     update(){
-        this.x += this.speedX;
-        this.y += this.speedY;
+        this.x += this.speedX; this.y += this.speedY;
         if(this.x>canvas.width) this.x=0;
         if(this.x<0) this.x=canvas.width;
         if(this.y>canvas.height) this.y=0;
@@ -273,22 +257,21 @@ class Particle {
     }
 }
 
-function initParticles(){
-    for(let i=0;i<100;i++){
-        particlesArray.push(new Particle());
-    }
-}
-function animateParticles(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particlesArray.forEach(p=>{
-        p.update();
-        p.draw();
-    });
-    requestAnimationFrame(animateParticles);
-}
+function initParticles(){ for(let i=0;i<100;i++){ particlesArray.push(new Particle()); } }
+function animateParticles(){ ctx.clearRect(0,0,canvas.width,canvas.height); particlesArray.forEach(p=>{ p.update(); p.draw(); }); requestAnimationFrame(animateParticles); }
+initParticles(); animateParticles();
 
-initParticles();
-animateParticles();
+// Scroll-Spy Navbar
+const sections = document.querySelectorAll('header, .container > div.section-head, .info-block');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if(pageYOffset >= sectionTop){ current = section.getAttribute('id'); }
+    });
+    navLinks.forEach(a => { a.classList.remove('active'); if(a.getAttribute('href') === '#' + current){ a.classList.add('active'); } });
+});
 </script>
 
 </body>
