@@ -303,6 +303,17 @@ Die erste Version der Stadtkarte befindet sich aktuell in Entwicklung.
 
 </div>
 
+<!-- Bewerbung Section -->
+<div class="container" style="margin-top:80px;">
+  <h2 style="margin-bottom:30px;" id="bewerbung">Bewerben</h2>
+
+  <p>Willst du Teil unseres Teams werden? Klicke auf den Button und melde dich mit deinem Discord Account an, um die Bewerbung zu starten.</p>
+
+  <a class="btn btn-primary" id="discordLogin" href="#">
+    ✨ Mit Discord bewerben
+  </a>
+</div>
+
 <div class="community">
 
 <h2>Werde Teil der Community</h2>
@@ -323,6 +334,35 @@ Discord beitreten
 Fiktive Stadt für ein Roblox Roleplay Projekt
 
 </footer>
+
+<script>
+/* Discord OAuth Login + Bewerbungs-PUSH */
+
+const clientId = "DEIN_DISCORD_CLIENT_ID"; // Discord OAuth Client ID
+const redirectUri = "https://deine-website.de/bewerbung-success"; // Seite, die der Bot empfängt
+const scope = "identify";
+
+document.getElementById("discordLogin").addEventListener("click", () => {
+    const url = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scope}`;
+    window.location.href = url;
+});
+
+// Optional: fetch API, um Bewerbung direkt an Bot zu senden
+// Beispiel (auf redirect-Seite nach OAuth):
+/*
+fetch('https://dein-bot.de/bewerbung', {
+   method: 'POST',
+   headers: {'Content-Type':'application/json'},
+   body: JSON.stringify({
+       user_id: discordId,
+       name: username,
+       discord: tag,
+       role: "Supporter",
+       reason: "Ich will helfen!"
+   })
+});
+*/
+</script>
 
 </body>
 </html>
